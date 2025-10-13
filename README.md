@@ -4,7 +4,11 @@ Proyecto de la asignatura de Sistemas de Gestión de Seguridad se Sistemas de In
 
 ## SudoMotors
 
-
+	* Aimar Larriba
+	* Eneko Rodríguez
+	* Urko Horas
+	* Daniel Talmaci
+	* June Castro
 
 ## Instrucciónes para despliegue del proyecto
 
