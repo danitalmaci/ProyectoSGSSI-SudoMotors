@@ -1,19 +1,33 @@
 
-# Docker LAMP
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
+# Proyecto SGSSI
+Proyecto de la asignatura de Sistemas de Gestión de Seguridad se Sistemas de Información realizado por el grupo SudoMotors	
 
-## Instructions
+## SudoMotors
 
-Enter the following command to start your containers:
+
+
+## Instrucciónes para despliegue del proyecto
+
+### 1. Descargar el repositorio
+
 ```bash
-$ docker-compose up -d
+git clone -b entrega_1 git@github.com:danitalmaci/ProyectoSGSSI-SudoMotors.git
 ```
 
-To stop them, use this:
+### 2. Moverse a la carpeta del proyecto
+
 ```bash
-$ docker-compose stop
+cd ProyectoSGSSI-SudoMotors
 ```
 
-Feel free to make pull requests and help to improve this.
+### 3. Levantamos el servicio mediante el 'docker-compose.yml'
 
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+```bash
+docker-compose up
+```
+
+### 4. Entrar a phpMyAdmin mediante localhost:8890
+
+### 5. Importamos "database.sql"
+
+
