@@ -27,22 +27,23 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
-  `dni` int(10)NOT NULL,
-  `nombre` text NOT NULL,
-  `apellidos` text NOT NULL,
-  `telefono` int(9) NOT NULL,
-  `email` text NOT NULL,
-  `f_nacimiento` date NOT NULL, 
-  `contraseña` varchar(255) NOT NULL
+CREATE TABLE `USUARIO` (
+  `DNI` int(10)NOT NULL UNIQUE,
+  `NOMBRE` text NOT NULL,
+  `APELLIDOS` text NOT NULL,
+  `TELEFONO` int(9) NOT NULL UNIQUE,
+  `EMAIL` text NOT NULL UNIQUE,
+  `F_NACIMIENTO` date NOT NULL,
+  `CONTRASENA` varchar(255) NOT NULL,
+  `USUARIO` varchar(255) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`dni`, `nombre`, `apellidos`, `telefono`, `email`, `f_nacimiento`, `contraseña`) VALUES
-('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300');
+INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USUARIO`) VALUES
+('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300', 'aitorjiji');
 
 
 -- --------------------------------------------------------
@@ -51,19 +52,19 @@ INSERT INTO `usuario` (`dni`, `nombre`, `apellidos`, `telefono`, `email`, `f_nac
 -- Estructura de tabla para la tabla `vehiculo`
 --
 
-CREATE TABLE `vehiculo` (
-  `matricula` int(10)NOT NULL,
-  `marca` text NOT NULL,
-  `modelo` text NOT NULL,
-  `año` int(4) NOT NULL,
-  `kms` int NOT NULL
+CREATE TABLE `VEHICULO` (
+  `MATRICULA` int(10)NOT NULL UNIQUE,
+  `MARCA` text NOT NULL,
+  `MODELO` text NOT NULL,
+  `ANO` int(4) NOT NULL,
+  `KMS` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `vehiculo`
 --
 
-INSERT INTO `vehiculo` (`matricula`, `marca`, `modelo`, `año`, `kms`) VALUES
+INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
 ('7777 XDD', 'Kia', 'Sportage', '2018', '205623');
 
 --
@@ -73,14 +74,14 @@ INSERT INTO `vehiculo` (`matricula`, `marca`, `modelo`, `año`, `kms`) VALUES
 --
 -- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`dni`);
-  
+ALTER TABLE `USUARIO`
+  ADD PRIMARY KEY (`DNI`);
+
 --
 -- Indices de la tabla `vehiculo`
 --
-ALTER TABLE `vehiculo`
-  ADD PRIMARY KEY (`matricula`);
+ALTER TABLE `VEHICULO`
+  ADD PRIMARY KEY (`MATRICULA`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
