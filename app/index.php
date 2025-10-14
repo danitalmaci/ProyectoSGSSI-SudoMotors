@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta: obtener todos los usuarios registrados
-$query = mysqli_query($conn, "SELECT * FROM USUARIOS") or die(mysqli_error($conn));
+$query = mysqli_query($conn, "SELECT * FROM usuario") or die(mysqli_error($conn));
 ?>
 
 <!DOCTYPE html>
