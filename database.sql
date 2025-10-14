@@ -24,35 +24,63 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `Usuario` (
-  `DNI` int(11) NOT NULL,
-  `Nombre` text NOT NULL,
-  `Apellidos` text NOT NULL,
-  `Telefono` text NOT NULL,
-  `Email` text NOT NULL,
-  `F_nacimiento` text NOT NULL, 
+CREATE TABLE `usuario` (
+  `dni` int(10)NOT NULL,
+  `nombre` text NOT NULL,
+  `apellidos` text NOT NULL,
+  `telefono` int(9) NOT NULL,
+  `email` text NOT NULL,
+  `f_nacimiento` date NOT NULL, 
+  `contraseña` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`) VALUES
-(1, 'mikel'),
-(2, 'aitor');
+INSERT INTO `usuario` (`dni`, `nombre`, `apellidos`, `telefono`, `email`, `f_nacimiento`, `contraseña`) VALUES
+('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehiculo`
+--
+
+CREATE TABLE `vehiculo` (
+  `matricula` int(10)NOT NULL,
+  `marca` text NOT NULL,
+  `modelo` text NOT NULL,
+  `año` int(4) NOT NULL,
+  `kms` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `vehiculo`
+--
+
+INSERT INTO `vehiculo` (`matricula`, `marca`, `modelo`, `año`, `kms`) VALUES
+('7777 XDD', 'Kia', 'Sportage', '2018', '205623');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`dni`);
+  
+--
+-- Indices de la tabla `vehiculo`
+--
+ALTER TABLE `vehiculo`
+  ADD PRIMARY KEY (`matricula`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
