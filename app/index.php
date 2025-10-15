@@ -1,13 +1,11 @@
+
 <?php
 // ------------------------------------------------------------
 // Página principal del sistema SudoMotors
 // ------------------------------------------------------------
 
 // Datos de conexión a la base de datos (contenedor "db")
-$hostname = "db";
-$username = "admin";
-$password = "test";
-$db = "database";
+include 'connection.php';
 
 // Conexión con la base de datos
 $conn = mysqli_connect($hostname, $username, $password, $db);
@@ -16,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta: obtener todos los usuarios registrados
-$query = mysqli_query($conn, "SELECT * FROM USUARIO") or die(mysqli_error($conn));
+$query = mysqli_query($conn, "SELECT USUARIO,NOMBRE FROM USUARIO") or die(mysqli_error($conn));
 ?>
 
 <!DOCTYPE html>
@@ -40,14 +38,14 @@ $query = mysqli_query($conn, "SELECT * FROM USUARIO") or die(mysqli_error($conn)
 
     <table border="1" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
         <tr>
-            <th>ID</th>
+            <th>Usuario</th>
             <th>Nombre</th>
         </tr>
 
         <?php
         // Mostrar los datos de la tabla de usuarios
         while ($row = mysqli_fetch_array($query)) {
-            echo "<tr><td>" . $row['id'] . "</td><td>" . $row['nombre'] . "</td></tr>";
+            echo "<tr><td>" . $row['USUARIO'] . "</td><td>" . $row['NOMBRE'] . "</td></tr>";
         }
         ?>
     </table>

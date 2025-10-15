@@ -1,16 +1,16 @@
 <?php
-require "connection.php";
+include 'connection.php'; 
 
-$message = "";
+$message="";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST["username"];
+    $username = $_POST["user"];
     $password = $_POST["password"];
 
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-    $result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM USUARIO WHERE USUARIO = '$username' AND CONTRASENA = '$password'";
+    $result = $conn->query($sql);
 
-    if (mysqli_num_rows($result) > 0) {
+    if ($result && $result->num_rows > 0) {
         header("Location: dashboard.php");
         exit;
     } else {
@@ -43,5 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         &nbsp;
         <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
     </form>
+    
 </body>
 </html>
