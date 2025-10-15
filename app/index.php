@@ -29,8 +29,8 @@ $query = mysqli_query($conn, "SELECT USUARIO,NOMBRE FROM USUARIO") or die(mysqli
     <p>Conexión a la base de datos establecida correctamente</p>
 
     <p>
-        <a href="register.html">Ir al registro de usuario</a><br>
-        <a href="login.html">Iniciar sesión</a><br>
+        <a href="register.php">Ir al registro de usuario</a><br>
+        <a href="login.php">Iniciar sesión</a><br>
         <a href="items.php">Ver elementos</a>
     </p>
 
