@@ -4,14 +4,14 @@ include 'connection.php';
 $message="";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST["user"];
+    $user = $_POST["user"];
     $password = $_POST["password"];
 
-    $sql = "SELECT * FROM USUARIO WHERE USUARIO = '$username' AND CONTRASENA = '$password'";
+    $sql = "SELECT * FROM USUARIO WHERE USUARIO = '$user' AND CONTRASENA = '$password'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
-        header("Location: dashboard.php");
+        header("Location: show_user.php?user=" . urlencode($user));
         exit;
     } else {
         $message = "Usuario o contraseña incorrecto.";
