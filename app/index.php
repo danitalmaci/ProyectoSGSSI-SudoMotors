@@ -1,5 +1,5 @@
-
 <?php
+
 // ------------------------------------------------------------
 // Página principal del sistema SudoMotors
 // ------------------------------------------------------------
@@ -7,14 +7,11 @@
 // Datos de conexión a la base de datos (contenedor "db")
 include 'connection.php';
 
-// Conexión con la base de datos
-$conn = mysqli_connect($hostname, $username, $password, $db);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
-
 // Consulta: obtener todos los usuarios registrados
 $query = mysqli_query($conn, "SELECT USUARIO,NOMBRE FROM USUARIO") or die(mysqli_error($conn));
+
+// Cerrar la conexión con la base de datos
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +52,3 @@ $query = mysqli_query($conn, "SELECT USUARIO,NOMBRE FROM USUARIO") or die(mysqli
 </body>
 </html>
 
-<?php
-// Cerrar la conexión con la base de datos
-mysqli_close($conn);
-?>
