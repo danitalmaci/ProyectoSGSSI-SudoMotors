@@ -31,7 +31,8 @@ if ($resul->num_rows > 0) {
     <p><strong>Teléfono:</strong> <?= htmlspecialchars($user['TELEFONO']) ?></p>
     <p><strong>DNI:</strong> <?= htmlspecialchars($user['DNI']) ?></p>
 
-    <!-- Aquí puedes añadir más campos si existen en tu tabla -->
+    <a href="modify_user.php?user=<?= urlencode($user['USUARIO']) ?>">Ir al registro de usuario</a><br>
+
     <p><a href="login.php">Volver al login</a></p>
 </body>
 </html>
