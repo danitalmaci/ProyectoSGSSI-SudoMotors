@@ -1,11 +1,11 @@
 <?php
-session_start();
+include 'connection.php';
 
 // Comprobar si el usuario está identificado
 if (!isset($_SESSION['user_id'])) {
 	// Si no está identificado le lleva a la página de iniciar sesión
-	header("Location: login.php");
-	exit;
+   	header("Location: login.php");
+    	exit;
 }
 
 $hostname = "db";
