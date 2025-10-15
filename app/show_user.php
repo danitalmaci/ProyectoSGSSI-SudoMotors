@@ -31,7 +31,7 @@ if ($resul->num_rows > 0) {
     <p><strong>Teléfono:</strong> <?= htmlspecialchars($user['TELEFONO']) ?></p>
     <p><strong>DNI:</strong> <?= htmlspecialchars($user['DNI']) ?></p>
 
-    <a href="modify_user.php?user=<?= urlencode($user['USUARIO']) ?>">Ir al registro de usuario</a><br>
+    <a href="modify_user.php?user=<?= urlencode($user['USUARIO']) ?>">Modificar </a><br>
 
     <p><a href="login.php">Volver al login</a></p>
 </body>
