@@ -1,49 +1,36 @@
 <?php session_start();
 include 'connection.php';
 
-// Comprobar si el usuario está identificado
-if (!isset($_SESSION['usuario'])) {
-	// Si no está identificado le lleva a la página de iniciar sesión
-   	header("Location: login.php");
-    	exit;
-}
-
 // Buscar los datos del usuario
-$query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='" . $_SESSION['usuario'] . "'");
+$query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='" . $_SESSION['matricula'] . "'");
 
 if (!$query || mysqli_num_rows($query) < 0) {
-    	echo "Usuario no encontrado.";
+    	echo "Vehiculo no encontrado.";
     	exit;
 }
 
-$user_data = mysqli_fetch_assoc($query);
+$vehiculo_data = mysqli_fetch_assoc($query);
 
 // Actualizar los datos del usuairo
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$new_dni = $_POST['dni'];
-    	$new_nombre = $_POST['nombre'];
-    	$new_apellidos = $_POST['apellidos'];
-    	$new_telefono = $_POST['telefono'];
-    	$new_email = $_POST['email'];
-    	$new_f_nacimiento = $_POST['f_nacimiento'];
-    	$new_contrasena = $_POST['contrasena'];
-    	$new_username = $_POST['username'];
+	$new_matricula = $_POST['matricula'];
+    	$new_marca = $_POST['marca'];
+    	$new_modelo = $_POST['modelo'];
+    	$new_ano = $_POST['ano'];
+    	$new_kms = $_POST['kms'];
 
-    	$sql = "UPDATE USUARIO SET 
-        	NOMBRE='$new_nombre',
-        	APELLIDOS='$new_apellidos',
-        	TELEFONO='$new_telefono',
-        	EMAIL='$new_email',
-        	F_NACIMIENTO='$new_f_nacimiento',
-        	CONTRASENA='$new_contrasena',
-        	USERNAME='$new_username',
-        	DNI='$new_dni'
-        	WHERE USERNAME='" . $_SESSION['usuario'] . "'";
+    	$sql = "UPDATE VEHICULO SET 
+        	MATRICULA='$new_matricula',
+        	MARCA='$new_marca',
+        	MODELO='$new_modelo',
+        	ANO='$new_ano',
+        	KMS='$new_kms'
+        	WHERE MATRICULA='" . $_SESSION['matricula'] . "'";
 
 	$result = mysqli_query($conn, $sql);
 
-	$_SESSION['usuario'] = $new_username;
-    	header("Location: show_user.php?user=" . urlencode($new_username));
+	$_SESSION['matricula'] = $new_matricula;
+    	header("Location: show_item.php?item=" . urlencode($new_matricula));
     	exit;
 }
 ?>
@@ -51,39 +38,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    	<title>Modificar 	usuario</title>
+    	<title>Modificar 	vehiculo</title>
 </head>
 <body>
 <h1>Modificar tus datos</h1>
-<form id="user_modify_form" method="post">
-	<label>Username:</label>
-    	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
+<form id="item_modify_form" method="post">
+	<label>Matricula:</label>
+    	<input type="text" name="matricula" value="<?= htmlspecialchars($vehiculo_data['MATRICULA']) ?>" required><br>
     	
-    	<label>Contraseña:</label>
-    	<input type="password" name="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>
+    	<label>Marca:</label>
+    	<input type="text" name="marca" value="<?= htmlspecialchars($vehiculo_data['MARCA']) ?>" required><br>
     	
-    	<label>Nombre:</label>
-    	<input type="text" name="nombre" value="<?= htmlspecialchars($user_data['NOMBRE']) ?>" required><br>
+    	<label>Modelo:</label>
+    	<input type="text" name="modelo" value="<?= htmlspecialchars($vehiculo_data['MODELO']) ?>" required><br>
 
-    	<label>Apellidos:</label>
-    	<input type="text" name="apellidos" value="<?= htmlspecialchars($user_data['APELLIDOS']) ?>" required><br>
+    	<label>Año:</label>
+    	<input type="text" name="ano" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
     	
-    	<label>DNI:</label>
-    	<input type="text" name="dni" value="<?= htmlspecialchars($user_data['DNI']) ?>" required><br>
-    	
-    	<label>Email:</label>
-    	<input type="email" name="email" value="<?= htmlspecialchars($user_data['EMAIL']) ?>" required><br>
+    	<label>Kilometros:</label>
+    	<input type="text" name="kms" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
 
-    	<label>Teléfono:</label>
-    	<input type="text" name="telefono" value="<?= htmlspecialchars($user_data['TELEFONO']) ?>" required><br>
-
-	<label>Fecha de nacimiento:</label>
-	<input type="date" name="f_nacimiento" value="<?= htmlspecialchars($user_data['F_NACIMIENTO']) ?>" required><br>
-
-	<button type="button" id="user_modify_submit">Guardar cambios</button>
+	<button type="button" id="item_modify_submit">Guardar cambios</button>
 </form>
 
-<script src="js/comprobacionDatos.js"></script>
+<script src="js/comprobacionVehiculo.js"></script>
 
 </body>
 
