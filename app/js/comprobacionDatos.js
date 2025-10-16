@@ -23,12 +23,17 @@
 
     function validDni(dni) {
         if (typeof dni !== 'string') return false;
-        const m = dni.trim().match(/^(\d{8})-?([A-Za-z])$/);
+
+        dni = dni.trim().replace(/[\u2010-\u2015\u2212\uFE58\uFE63\uFF0D]/g, '-');
+
+        const m = dni.match(/^(\d{8})-([A-Za-z])$/);
         if (!m) return false;
+
         const num = m[1];
         const letter = m[2].toUpperCase();
         return dniExpectedLetter(num) === letter;
     }
+
 
     function dniExpectedLetter(num) {
         const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -78,6 +83,11 @@
             if (!validDni(val)) {
                 span.textContent = 'DNI inválido. Formato: 11111111-Z.';
                 return false;
+            }
+            // Normalizar la letra a mayúscula antes de enviar
+            const parts = val.split('-');
+            if (parts.length === 2) {
+                input.value = parts[0] + '-' + parts[1].toUpperCase();
             }
             return true;
         }
