@@ -1,19 +1,18 @@
 <?php
-// register.php - validación básica en servidor, validación UX en JS
-include 'connection.php'; // Debe definir $conn (mysqli)
 
-$message = '';
+include 'connection.php'; 
 
-// --- Procesamiento POST ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username     = trim($_POST['usuario'] ?? '');
+$message = ''; //Variable para almacenar errores o mensajes para mostrar en la página.
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha enviado por POST
+    $username     = $_POST['usuario'] ?? '';
     $password     = $_POST['contrasena'] ?? '';
-    $nombre       = trim($_POST['nombre'] ?? '');
-    $apellidos    = trim($_POST['apellidos'] ?? '');
-    $dni          = strtoupper(trim($_POST['dni'] ?? ''));
-    $email        = trim($_POST['email'] ?? '');
-    $telefono     = trim($_POST['telefono'] ?? '');
-    $f_nacimiento = trim($_POST['f_nacimiento'] ?? '');
+    $nombre       = $_POST['nombre'] ?? '';
+    $apellidos    = $_POST['apellidos'] ?? '';
+    $dni          = $_POST['dni'] ?? '';
+    $email        = $_POST['email'] ?? '';
+    $telefono     = $_POST['telefono'] ?? '';
+    $f_nacimiento = $_POST['f_nacimiento'] ?? '';
 
     // Comprobación mínima: unicidad
     $checkSql = "SELECT USERNAME, EMAIL, DNI, TELEFONO FROM USUARIO WHERE USERNAME=? OR EMAIL=? OR DNI=? OR TELEFONO=?";
