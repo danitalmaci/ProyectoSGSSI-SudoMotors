@@ -42,7 +42,7 @@ CREATE TABLE `USUARIO` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USUARIO`) VALUES
+INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USERNAME`) VALUES
 ('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300', 'aitorjiji');
 
 
