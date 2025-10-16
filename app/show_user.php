@@ -2,7 +2,7 @@
 include 'connection.php';
 $user=$_GET['user'] ?? 'Unknown';
 
-$sql="SELECT * FROM USUARIO WHERE USUARIO= '$user'";
+$sql="SELECT * FROM USUARIO WHERE USERNAME= '$user'";
 $result=$conn->query($sql);
 
 if (!$result) {
@@ -26,12 +26,12 @@ if ($result->num_rows > 0) {
 <body>
     <h1>Perfil de <?= htmlspecialchars($fullname) ?></h1>
 
-    <p><strong>Usuario:</strong> <?= htmlspecialchars($user['USUARIO']) ?></p>
+    <p><strong>Usuario:</strong> <?= htmlspecialchars($user['USERNAME']) ?></p>
     <p><strong>Email:</strong> <?= htmlspecialchars($user['EMAIL']) ?></p>
     <p><strong>Teléfono:</strong> <?= htmlspecialchars($user['TELEFONO']) ?></p>
     <p><strong>DNI:</strong> <?= htmlspecialchars($user['DNI']) ?></p>
 
-    <a href="modify_user.php?user=<?= urlencode($user['USUARIO']) ?>">Modificar </a><br>
+    <a href="modify_user.php?user=<?= urlencode($user['USERNAME']) ?>">Modificar </a><br>
 
     <p><a href="login.php">Volver al login</a></p>
 </body>
