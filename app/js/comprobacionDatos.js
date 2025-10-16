@@ -1,6 +1,5 @@
 (function(){
-    // Indica cualquier error por formato no válido
-    function getErrorSpan(input) {
+    function getErrorSpan(input) { //Indica cualquier error por formato no válido
         let span = input.nextElementSibling;
         if (!span || !span.classList || !span.classList.contains('field-error')) {
             span = document.createElement('span');
@@ -14,14 +13,14 @@
     }
 
     // COMPROBACIONES
-    function validName(s) {
+    function validName(s) { //Comprueba que se ha introducido un string de longitud mayor a 0
         if (typeof s !== 'string') return false;
         s = s.trim();
         if (s.length === 0) return false;
         return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(s);
     }
 
-    function validDni(dni) {
+    function validDni(dni) { //Comprueba que se ha introducido un dni de 8 dígitos + - + letra
         if (typeof dni !== 'string') return false;
 
         dni = dni.trim().replace(/[\u2010-\u2015\u2212\uFE58\uFE63\uFF0D]/g, '-');
@@ -35,29 +34,28 @@
     }
 
 
-    function dniExpectedLetter(num) {
+    function dniExpectedLetter(num) { //Comprueba que la letra del dni coincide con la serie de números del mismo
         const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
         return letters.charAt(Number(num) % 23);
     }
 
-    function validPhone(phone) {
+    function validPhone(phone) { //Comprueba que el número de teléfono introducido es de 9 dígitos
         return (/^\d{9}$/).test(String(phone).trim());
     }
 
-    function validDateYMD(d) {
+    function validDateYMD(d) { //Comprueba que la fecha introducida tiene el formato YYYY-MM-DD
         if (!(/^\d{4}-\d{2}-\d{2}$/).test(d)) return false;
         const [y, m, day] = d.split('-').map(Number);
         const dt = new Date(y, m-1, day);
         return dt.getFullYear() === y && (dt.getMonth()+1) === m && dt.getDate() === day;
     }
 
-    function validEmail(e) {
+    function validEmail(e) { //Comprueba que el email introducido no contiene espacios antes del @, que contiene un único @, y que hay un .'dominio'
         if (typeof e !== 'string') return false;
         return (/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(e.trim());
     }
 
-    //Comprobar datos en funcion del nombre del campo
-    function validateField(input) {
+    function validateField(input) { //Comprobar datos en funcion del nombre del campo
         const name = input.getAttribute('name');
         const val = (input.value || '').trim();
         const span = getErrorSpan(input);
@@ -117,9 +115,9 @@
         }
 
         // Si quieres validar username y contraseña:
-        if (name === 'username') {
+        if (name === 'usuario') {
             if (val.length === 0) {
-                span.textContent = 'El username no puede estar vacío.';
+                span.textContent = 'El usuario no puede estar vacío.';
                 return false;
             }
             return true;
@@ -138,7 +136,7 @@
 
     function enviarFormulario(formId) {
         const form = document.getElementById(formId);
-        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="username"], input[name="contrasena"]');
+        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="usuario"], input[name="contrasena"]');
     
         let todoOk = true;
 

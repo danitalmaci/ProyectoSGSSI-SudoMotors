@@ -16,29 +16,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
 
     // Comprobación mínima: unicidad
     $checkSql = "SELECT USERNAME, EMAIL, DNI, TELEFONO FROM USUARIO WHERE USERNAME=? OR EMAIL=? OR DNI=? OR TELEFONO=?";
-    $stmt = $conn->prepare($checkSql);
+    $stmt = $conn->prepare($checkSql); //Devuelve false si hay fallo en la consulta
     if ($stmt) {
-        $stmt->bind_param('ssss', $username, $email, $dni, $telefono);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        $exists = $res->fetch_assoc();
+        $stmt->bind_param('ssss', $username, $email, $dni, $telefono); //Con 'ssss' se indica que los 4 parámetros van a ser Strings. MySQL convierte la cadena a número en el caso de teléfono.
+        $stmt->execute(); //Lanza la consulta
+        $res = $stmt->get_result(); //Obtiene el resultado
+        $exists = $res->fetch_assoc(); //Toma la primera fila como array asociativo, null si no hay filas.
         $stmt->close();
 
-        if ($exists) {
-            if ($exists['USERNAME'] === $username) $message = "El usuario ya existe.";
-            elseif ($exists['EMAIL'] === $email) $message = "El email ya está en uso.";
-            elseif ($exists['DNI'] === $dni) $message = "El DNI ya está registrado.";
-            elseif ((string)$exists['TELEFONO'] === $telefono) $message = "El teléfono ya está en uso.";
-            else $message = "Existe un registro con datos coincidentes.";
-        } else {
+        if ($exists) { //Si no es null, es decir, si existe alguna fila en la que coincide algún elemento.
+          $errors = []; 
+          if ($exists['USERNAME'] === $username) $errors['usuario'] = "El usuario ya existe.";
+            if ($exists['DNI'] === $dni) $errors['dni'] = "El DNI ya está registrado.";
+            if ($exists['EMAIL'] === $email) $errors['email'] = "El email ya está en uso.";
+            if ((string)$exists['TELEFONO'] === $telefono) $errors['telefono'] = "El teléfono ya está en uso.";
+        } else { //Si no coincide ninguna, insertamos a la tabla.
             $insertSql = "INSERT INTO USUARIO (DNI, NOMBRE, APELLIDOS, TELEFONO, EMAIL, F_NACIMIENTO, CONTRASENA, USERNAME)
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt2 = $conn->prepare($insertSql);
             if ($stmt2) {
                 $stmt2->bind_param('ssssssss', $dni, $nombre, $apellidos, $telefono, $email, $f_nacimiento, $password, $username);
-                if ($stmt2->execute()) {
+                if ($stmt2->execute()) { //Si la ejecución funciona
                     $stmt2->close();
-                    $conn->close();
+                    $conn->close(); 
                     header("Location: login.php");
                     exit;
                 } else {
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
         $message = "Error preparando comprobación: " . htmlspecialchars($conn->error, ENT_QUOTES, 'UTF-8');
     }
 }
-
+//Recuperamos los valores enviados por el formulario
 $v_usuario   = htmlspecialchars($_POST['usuario'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_nombre    = htmlspecialchars($_POST['nombre'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_apellidos = htmlspecialchars($_POST['apellidos'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -67,7 +67,7 @@ $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Registro - SudoMotors</title>
+  <title>Registro - SudoMotors</title> 
 </head>
 <body>
   <h1>Registro de usuario</h1>
@@ -79,6 +79,9 @@ $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8
   <form id="register_form" method="POST" action="">
     <label>Usuario:<br>
       <input type="text" name="usuario" required value="<?php echo $v_usuario; ?>">
+      <?php if (isset($errors['usuario'])): ?>
+        <span style="color:red;"><?php echo htmlspecialchars($errors['usuario']); ?></span>
+      <?php endif; ?>
     </label><br>
 
     <label>Contraseña:<br>
@@ -95,14 +98,23 @@ $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8
 
     <label>DNI:<br>
       <input type="text" name="dni" required placeholder="11111111-Z" value="<?php echo $v_dni; ?>">
+      <?php if (isset($errors['dni'])): ?>
+        <span style="color:red;"><?php echo htmlspecialchars($errors['dni']); ?></span>
+      <?php endif; ?>
     </label><br>
 
     <label>Email:<br>
       <input type="email" name="email" required value="<?php echo $v_email; ?>">
+      <?php if (isset($errors['email'])): ?>
+        <span style="color:red;"><?php echo htmlspecialchars($errors['email']); ?></span>
+      <?php endif; ?>
     </label><br>
 
     <label>Teléfono:<br>
       <input type="text" name="telefono" required placeholder="9 dígitos" value="<?php echo $v_telefono; ?>">
+      <?php if (isset($errors['telefono'])): ?>
+        <span style="color:red;"><?php echo htmlspecialchars($errors['telefono']); ?></span>
+      <?php endif; ?>
     </label><br>
 
     <label>Fecha de nacimiento:<br>
