@@ -151,10 +151,16 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const boton = document.getElementById('user_modify_submit');
-        if (boton) {
-            boton.addEventListener('click', function() {
+        const botonModify = document.getElementById('user_modify_submit');
+        if (botonModify) {
+            botonModify.addEventListener('click', function() {
                 enviarFormulario('user_modify_form');
+            });
+        }
+        const botonRegister = document.getElementById('register_submit');
+        if (botonRegister) {
+            botonRegister.addEventListener('click', function() {
+                enviarFormulario('register_form');
             });
         }
     });
