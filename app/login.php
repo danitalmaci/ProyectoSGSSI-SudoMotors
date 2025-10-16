@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($result && $result->num_rows > 0) {
     	$userData = $result->fetch_assoc(); // <-- corregido
         $_SESSION['usuario'] = $userData['USERNAME']; // <-- correcto
-        header("Location: show_user.php?user=" . urlencode($userData['USERNAME']));
+        header("Location: items.php");
         exit;
     } else {
         $message = "Usuario o contraseña incorrecto.";
