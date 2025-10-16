@@ -42,14 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$result = mysqli_query($conn, $sql);
 
-	if (!$result) {
-    		die("ERROR SQL: " . mysqli_error($conn) . "<br>Query: $sql");
-	} else {
-    		echo "UPDATUSERNAMEE OK<br>";
-    		echo "Query ejecutada: $sql<br>";
-    		exit;
-	}
-
 	$_SESSION['usuario'] = $new_username;
     	header("Location: show_user.php?user=" . urlencode($new_username));
     	exit;
