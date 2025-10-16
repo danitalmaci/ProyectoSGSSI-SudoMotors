@@ -7,13 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $_POST["user"];
     $password = $_POST["password"];
 
-    $sql = "SELECT * FROM USUARIO WHERE USUARIO = '$user' AND CONTRASENA = '$password'";
+    $sql = "SELECT * FROM USUARIO WHERE USERNAME = '$user' AND CONTRASENA = '$password'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
     	$userData = $result->fetch_assoc(); // <-- corregido
-        $_SESSION['usuario'] = $userData['USUARIO']; // <-- correcto
-        header("Location: show_user.php?user=" . urlencode($userData['USUARIO']));
+        $_SESSION['usuario'] = $userData['USERNAME']; // <-- correcto
+        header("Location: show_user.php?user=" . urlencode($userData['USERNAME']));
         exit;
     } else {
         $message = "Usuario o contraseña incorrecto.";
