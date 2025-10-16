@@ -1,17 +1,11 @@
 <?php
-// register.php - usa echo para HTML, validación en JS (cliente) y comprobación mínima en servidor
-// Pegar en app/register.php (suponiendo connection.php en la misma carpeta)
+// register.php - validación básica en servidor, validación UX en JS
+include 'connection.php'; // Debe definir $conn (mysqli)
 
-// --- Incluir conexión ---
-include 'connection.php'; // debe definir $conn (mysqli)
-
-// --- Mensaje para mostrar en la UI ---
 $message = '';
 
-// --- Procesamiento POST (mínimo) ---
+// --- Procesamiento POST ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recogemos los valores tal cual vienen del formulario (JS hace validación UX)
-    // Aquí hacemos comprobaciones mínimas en servidor: campos no vacíos y unicidad.
     $username     = trim($_POST['usuario'] ?? '');
     $password     = $_POST['contrasena'] ?? '';
     $nombre       = trim($_POST['nombre'] ?? '');
@@ -21,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono     = trim($_POST['telefono'] ?? '');
     $f_nacimiento = trim($_POST['f_nacimiento'] ?? '');
 
-    // Comprobamos unicidad (USERNAME / EMAIL / DNI / TELEFONO) con sentencia preparada
+    // Comprobación mínima: unicidad
     $checkSql = "SELECT USERNAME, EMAIL, DNI, TELEFONO FROM USUARIO WHERE USERNAME=? OR EMAIL=? OR DNI=? OR TELEFONO=?";
     $stmt = $conn->prepare($checkSql);
     if ($stmt) {
@@ -32,14 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         if ($exists) {
-            if (isset($exists['USERNAME']) && $exists['USERNAME'] === $username) $message = "El usuario ya existe.";
-            elseif (isset($exists['EMAIL']) && $exists['EMAIL'] === $email) $message = "El email ya está en uso.";
-            elseif (isset($exists['DNI']) && $exists['DNI'] === $dni) $message = "El DNI ya está registrado.";
-            elseif (isset($exists['TELEFONO']) && (string)$exists['TELEFONO'] === $telefono) $message = "El teléfono ya está en uso.";
+            if ($exists['USERNAME'] === $username) $message = "El usuario ya existe.";
+            elseif ($exists['EMAIL'] === $email) $message = "El email ya está en uso.";
+            elseif ($exists['DNI'] === $dni) $message = "El DNI ya está registrado.";
+            elseif ((string)$exists['TELEFONO'] === $telefono) $message = "El teléfono ya está en uso.";
             else $message = "Existe un registro con datos coincidentes.";
         } else {
             $insertSql = "INSERT INTO USUARIO (DNI, NOMBRE, APELLIDOS, TELEFONO, EMAIL, F_NACIMIENTO, CONTRASENA, USERNAME)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt2 = $conn->prepare($insertSql);
             if ($stmt2) {
                 $stmt2->bind_param('ssssssss', $dni, $nombre, $apellidos, $telefono, $email, $f_nacimiento, $password, $username);
@@ -61,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// --- Preparar valores para re-fill si hubo error (escapados) ---
 $v_usuario   = htmlspecialchars($_POST['usuario'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_nombre    = htmlspecialchars($_POST['nombre'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_apellidos = htmlspecialchars($_POST['apellidos'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -69,14 +62,8 @@ $v_dni       = htmlspecialchars($_POST['dni'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_email     = htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_telefono  = htmlspecialchars($_POST['telefono'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8');
+?>
 
-$message_html = '';
-if (!empty($message)) {
-    $message_html = '<p style="color:red;">' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
-}
-
-// --- Imprimir HTML con echo (heredoc) ---
-echo <<<HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -85,10 +72,14 @@ echo <<<HTML
 </head>
 <body>
   <h1>Registro de usuario</h1>
-  {$message_html}
+
+  <?php if (!empty($message)): ?>
+    <p style="color:red;"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+  <?php endif; ?>
+
   <form id="register_form" method="POST" action="">
     <label>Usuario:<br>
-      <input type="text" name="usuario" required value="{$v_usuario}">
+      <input type="text" name="usuario" required value="<?php echo $v_usuario; ?>">
     </label><br>
 
     <label>Contraseña:<br>
@@ -96,27 +87,27 @@ echo <<<HTML
     </label><br>
 
     <label>Nombre:<br>
-      <input type="text" name="nombre" required value="{$v_nombre}">
+      <input type="text" name="nombre" required value="<?php echo $v_nombre; ?>">
     </label><br>
 
     <label>Apellidos:<br>
-      <input type="text" name="apellidos" required value="{$v_apellidos}">
+      <input type="text" name="apellidos" required value="<?php echo $v_apellidos; ?>">
     </label><br>
 
     <label>DNI:<br>
-      <input type="text" name="dni" required placeholder="11111111-Z" value="{$v_dni}">
+      <input type="text" name="dni" required placeholder="11111111-Z" value="<?php echo $v_dni; ?>">
     </label><br>
 
     <label>Email:<br>
-      <input type="email" name="email" required value="{$v_email}">
+      <input type="email" name="email" required value="<?php echo $v_email; ?>">
     </label><br>
 
     <label>Teléfono:<br>
-      <input type="text" name="telefono" required placeholder="9 dígitos" value="{$v_telefono}">
+      <input type="text" name="telefono" required placeholder="9 dígitos" value="<?php echo $v_telefono; ?>">
     </label><br>
 
     <label>Fecha de nacimiento:<br>
-      <input type="date" name="f_nacimiento" required value="{$v_f_nac}">
+      <input type="date" name="f_nacimiento" required value="<?php echo $v_f_nac; ?>">
     </label><br><br>
 
     <button type="button" id="register_submit">Registrarme</button>
@@ -125,5 +116,3 @@ echo <<<HTML
   <script src="js/comprobacionDatos.js"></script>
 </body>
 </html>
-HTML;
-?>

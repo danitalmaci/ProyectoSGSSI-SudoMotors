@@ -1,5 +1,4 @@
 <?php
-
 // ------------------------------------------------------------
 // Página principal del sistema SudoMotors
 // ------------------------------------------------------------
@@ -8,12 +7,11 @@
 include 'connection.php';
 
 // Consulta: obtener todos los usuarios registrados
-$query = mysqli_query($conn, "SELECT USERNAME,NOMBRE FROM USUARIO") or die(mysqli_error($conn));
+$query = mysqli_query($conn, "SELECT USERNAME, NOMBRE FROM USUARIO") or die(mysqli_error($conn));
 
 // Cerrar la conexión con la base de datos
 mysqli_close($conn);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,17 +36,15 @@ mysqli_close($conn);
             <th>Usuario</th>
             <th>Nombre</th>
         </tr>
-
-        <?php
-        // Mostrar los datos de la tabla de usuarios
-        while ($row = mysqli_fetch_array($query)) {
-            echo "<tr><td>" . $row['USERNAME'] . "</td><td>" . $row['NOMBRE'] . "</td></tr>";
-        }
-        ?>
+        <?php while ($row = mysqli_fetch_array($query)): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['USERNAME'], ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['NOMBRE'], ENT_QUOTES, 'UTF-8'); ?></td>
+            </tr>
+        <?php endwhile; ?>
     </table>
 
     <br>
     <p>Ingeniería Informática de Gestión y Sistemas de Información: SGSSI. Proyecto: SISTEMA WEB</p>
 </body>
 </html>
-
