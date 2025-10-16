@@ -29,10 +29,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	$new_contrasena = $_POST['contrasena'];
     	$new_usuario = $_POST['usuario'];
 
-    	mysqli_query($conn, "UPDATE USUARIO SET NOMBRE='$new_nombre', APELLIDOS='$new_apellidos', TELEFONO='$new_telefono', EMAIL='$new_email', 
-    						F_NACIMIENTO='$new_f_nacimiento', CONTRASENA='$new_contrasena', USUARIO='$new_usuario' 
-    						WHERE USUARIO='" . $_SESSION['usuario'] . "'");
+    	$sql = "UPDATE USUARIO SET 
+        	NOMBRE='$new_nombre',
+        	APELLIDOS='$new_apellidos',
+        	TELEFONO='$new_telefono',
+        	EMAIL='$new_email',
+        	F_NACIMIENTO='$new_f_nacimiento',
+        	CONTRASENA='$new_contrasena',
+        	USUARIO='$new_usuario',
+        	DNI='$new_dni'
+        	WHERE USUARIO='" . $_SESSION['usuario'] . "'";
 
+	$result = mysqli_query($conn, $sql);
+
+	if (!$result) {
+    		die("ERROR SQL: " . mysqli_error($conn) . "<br>Query: $sql");
+	} else {
+    		echo "UPDATE OK<br>";
+    		echo "Query ejecutada: $sql<br>";
+    		exit;
+	}
 
 	$_SESSION['usuario'] = $new_usuario;
     	header("Location: show_user.php?user=" . urlencode($new_usuario));
