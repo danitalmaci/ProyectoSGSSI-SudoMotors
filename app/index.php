@@ -1,50 +1,32 @@
-<?php
-// ------------------------------------------------------------
-// Página principal del sistema SudoMotors
-// ------------------------------------------------------------
-
-// Datos de conexión a la base de datos (contenedor "db")
-include 'connection.php';
-
-// Consulta: obtener todos los usuarios registrados
-$query = mysqli_query($conn, "SELECT USERNAME, NOMBRE FROM USUARIO") or die(mysqli_error($conn));
-
-// Cerrar la conexión con la base de datos
-mysqli_close($conn);
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>SudoMotors</title>
+    <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+        body {
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
-    <h1>HOME</h1>
-    <h2>Bienvenido a SudoMotors</h2>
-    <p>Conexión a la base de datos establecida correctamente</p>
-
+    <h1>Home</h1>
+    <h3>Bienvenido a SudoMotors</h3>
     <p>
-        <a href="register.php">Ir al registro de usuario</a><br>
-        <a href="login.php">Iniciar sesión</a><br>
-        <a href="items.php">Ver elementos</a>
+        <button type="button" onclick="window.location.href='register.php'">Registro de usuario</button><br><br>
+        <button type="button" onclick="window.location.href='login.php'">Iniciar sesión</button><br><br>
+        <button type="button" onclick="window.location.href='items.php'">Ver elementos</button>
     </p>
-
-    <h3>Usuarios registrados:</h3>
-
-    <table border="1" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
-        <tr>
-            <th>Usuario</th>
-            <th>Nombre</th>
-        </tr>
-        <?php while ($row = mysqli_fetch_array($query)): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($row['USERNAME'], ENT_QUOTES, 'UTF-8'); ?></td>
-                <td><?php echo htmlspecialchars($row['NOMBRE'], ENT_QUOTES, 'UTF-8'); ?></td>
-            </tr>
-        <?php endwhile; ?>
-    </table>
-
-    <br>
-    <p>Ingeniería Informática de Gestión y Sistemas de Información: SGSSI. Proyecto: SISTEMA WEB</p>
+    <footer>Ingeniería Informática de Gestión y Sistemas de Información: SGSSI. Proyecto: SISTEMA WEB</footer>
 </body>
 </html>
