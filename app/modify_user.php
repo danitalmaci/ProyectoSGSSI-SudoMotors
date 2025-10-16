@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 // Buscar los datos del usuario
-$query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USUARIO='" . $_SESSION['usuario'] . "'");
+$query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='" . $_SESSION['usuario'] . "'");
 
 if (!$query || mysqli_num_rows($query) < 0) {
     	echo "Usuario no encontrado.";
@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         	EMAIL='$new_email',
         	F_NACIMIENTO='$new_f_nacimiento',
         	CONTRASENA='$new_contrasena',
-        	USUARIO='$new_usuario',
+        	USERNAME='$new_usuario',
         	DNI='$new_dni'
-        	WHERE USUARIO='" . $_SESSION['usuario'] . "'";
+        	WHERE USERNAME='" . $_SESSION['usuario'] . "'";
 
 	$result = mysqli_query($conn, $sql);
 
 	if (!$result) {
     		die("ERROR SQL: " . mysqli_error($conn) . "<br>Query: $sql");
 	} else {
-    		echo "UPDATE OK<br>";
+    		echo "UPDATUSERNAMEE OK<br>";
     		echo "Query ejecutada: $sql<br>";
     		exit;
 	}
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>Modificar tus datos</h1>
 <form id="user_modify_form" method="post">
 	<label>Usuario:</label>
-    	<input type="text" name="usuario" value="<?= htmlspecialchars($user_data['USUARIO']) ?>" required><br>
+    	<input type="text" name="usuario" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
     	
     	<label>Contraseña:</label>
     	<input type="password" name="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>
