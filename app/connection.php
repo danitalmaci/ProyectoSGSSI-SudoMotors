@@ -1,11 +1,11 @@
 <?php
 $hostname = "db";
-$username = "admin";
+$bdusername = "admin";
 $password = "test";
 $db = "database";
 
 // Crear la conexión con la base de datos
-$conn = mysqli_connect($hostname, $username, $password, $db);
+$conn = mysqli_connect($hostname, $bdusername, $password, $db);
 
 // Verificar la conexión
 if (!$conn) {
