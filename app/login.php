@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 include 'connection.php'; 
 
 $message="";
@@ -11,7 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
-        header("Location: show_user.php?user=" . urlencode($user));
+    	$userData = $result->fetch_assoc(); // <-- corregido
+        $_SESSION['usuario'] = $userData['USUARIO']; // <-- correcto
+        header("Location: show_user.php?user=" . urlencode($userData['USUARIO']));
         exit;
     } else {
         $message = "Usuario o contraseña incorrecto.";
