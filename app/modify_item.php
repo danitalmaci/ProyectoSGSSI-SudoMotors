@@ -2,14 +2,14 @@
 include 'connection.php';
 
 // Comprobar si el usuario está identificado
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['usuario'])) {
 	// Si no está identificado le lleva a la página de iniciar sesión
    	header("Location: login.php");
     	exit;
 }
 
 // Buscar los datos del usuario
-$query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='" . $_SESSION['username'] . "'");
+$query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='" . $_SESSION['usuario'] . "'");
 
 if (!$query || mysqli_num_rows($query) < 0) {
     	echo "Usuario no encontrado.";
@@ -38,11 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         	CONTRASENA='$new_contrasena',
         	USERNAME='$new_username',
         	DNI='$new_dni'
-        	WHERE USERNAME='" . $_SESSION['username'] . "'";
+        	WHERE USERNAME='" . $_SESSION['usuario'] . "'";
 
 	$result = mysqli_query($conn, $sql);
 
-	$_SESSION['username'] = $new_username;
+	$_SESSION['usuario'] = $new_username;
     	header("Location: show_user.php?user=" . urlencode($new_username));
     	exit;
 }

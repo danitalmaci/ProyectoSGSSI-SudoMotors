@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result && $result->num_rows > 0) {
     	$userData = $result->fetch_assoc(); // <-- corregido
-        $_SESSION['usuario'] = $userData['USERNAME']; // <-- correcto
+        $_SESSION['username'] = $userData['USERNAME']; // <-- correcto
         header("Location: items.php");
         exit;
     } else {
