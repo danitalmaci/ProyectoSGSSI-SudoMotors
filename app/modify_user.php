@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	$new_email = $_POST['email'];
     	$new_f_nacimiento = $_POST['f_nacimiento'];
     	$new_contrasena = $_POST['contrasena'];
-    	$new_usuario = $_POST['usuario'];
+    	$new_username = $_POST['username'];
 
     	$sql = "UPDATE USUARIO SET 
         	NOMBRE='$new_nombre',
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         	EMAIL='$new_email',
         	F_NACIMIENTO='$new_f_nacimiento',
         	CONTRASENA='$new_contrasena',
-        	USERNAME='$new_usuario',
+        	USERNAME='$new_username',
         	DNI='$new_dni'
         	WHERE USERNAME='" . $_SESSION['usuario'] . "'";
 
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     		exit;
 	}
 
-	$_SESSION['usuario'] = $new_usuario;
-    	header("Location: show_user.php?user=" . urlencode($new_usuario));
+	$_SESSION['usuario'] = $new_username;
+    	header("Location: show_user.php?user=" . urlencode($new_username));
     	exit;
 }
 ?>
@@ -59,13 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    	<title>Modificar usuario</title>
+    	<title>Modificar 	usuario</title>
 </head>
 <body>
 <h1>Modificar tus datos</h1>
 <form id="user_modify_form" method="post">
-	<label>Usuario:</label>
-    	<input type="text" name="usuario" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
+	<label>Username:</label>
+    	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
     	
     	<label>Contraseña:</label>
     	<input type="password" name="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>

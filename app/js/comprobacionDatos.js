@@ -106,10 +106,10 @@
             return true;
         }
 
-        // Si quieres validar usuario y contraseña:
-        if (name === 'usuario') {
+        // Si quieres validar username y contraseña:
+        if (name === 'username') {
             if (val.length === 0) {
-                span.textContent = 'El usuario no puede estar vacío.';
+                span.textContent = 'El username no puede estar vacío.';
                 return false;
             }
             return true;
@@ -128,7 +128,7 @@
 
     function enviarFormulario(formId) {
         const form = document.getElementById(formId);
-        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="usuario"], input[name="contrasena"]');
+        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="username"], input[name="contrasena"]');
     
         let todoOk = true;
 
