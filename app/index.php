@@ -8,7 +8,7 @@
 include 'connection.php';
 
 // Consulta: obtener todos los usuarios registrados
-$query = mysqli_query($conn, "SELECT USERNAME,NOMBRE FROM USERNAME") or die(mysqli_error($conn));
+$query = mysqli_query($conn, "SELECT USERNAME,NOMBRE FROM USUARIO") or die(mysqli_error($conn));
 
 // Cerrar la conexión con la base de datos
 mysqli_close($conn);
@@ -35,7 +35,7 @@ mysqli_close($conn);
 
     <table border="1" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
         <tr>
-            <th>Username</th>
+            <th>Usuario</th>
             <th>Nombre</th>
         </tr>
 
