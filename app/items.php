@@ -1,4 +1,6 @@
 <?php
+session_start(); // 🔹 Necesario para acceder a $_SESSION
+
 // ------------------------------------------------------------
 // Listado de Vehiculos
 // ------------------------------------------------------------
@@ -6,12 +8,15 @@
 // Datos de conexión a la base de datos
 include 'connection.php';
 
-// Consulta: obtener todos los datos necesarios de los vehiculos
+// Obtenemos el usuario desde la sesión
+$userlogin = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
+// Consulta: obtener todos los datos necesarios de los vehículos
 $sql = "SELECT MARCA, MODELO, MATRICULA FROM VEHICULO";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Mostrar listado de vehiculos con sus respectivos atributos
+    // Mostrar listado de vehículos con sus respectivos atributos
     echo '
         <h1>VEHÍCULOS DISPONIBLES</h1>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
@@ -51,7 +56,6 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -59,16 +63,16 @@ $conn->close();
   <title>Vehículos</title> 
 </head>
 <body>
-	<div style="position: absolute; top: 20px; right: 20px;">
-            <form action="show_user.php" method="get">
-                <button type="submit">Ver perfil</button>
-            </form>
-    </div>
-	<br>
-    <form action="add_item.php" method="get"> 
-        <button type="submit">Añadir vehículo</button>
+  <div style="position: absolute; top: 20px; right: 20px;">
+    <form action="show_user.php?user=".urldecode($userlogin) method="get">
+      <button type="submit">Ver perfil</button>
     </form>
+  </div>
+
+  <br>
+
+  <form action="add_item.php" method="get"> 
+    <button type="submit">Añadir vehículo</button>
+  </form>
 </body>
 </html>
-
-
