@@ -1,23 +1,21 @@
 <?php
-session_start(); // 🔹 Necesario para acceder a $_SESSION
+session_start();
 
-// ------------------------------------------------------------
-// Listado de Vehiculos
-// ------------------------------------------------------------
-
-// Datos de conexión a la base de datos
+// Conexión a la base de datos
 include 'connection.php';
 
-// Obtenemos el usuario desde la sesión
+// Obtener el usuario de la sesión
 $userlogin = $_SESSION['username'];
 
-// Consulta: obtener todos los datos necesarios de los vehículos
+// Consulta para obtener los vehículos
 $sql = "SELECT MARCA, MODELO, MATRICULA FROM VEHICULO";
 $result = $conn->query($sql);
 
+// Guardar resultados en una variable para mostrarlos luego en el body
+$vehiculos_html = "";
+
 if ($result->num_rows > 0) {
-    // Mostrar listado de vehículos con sus respectivos atributos
-    echo '
+    $vehiculos_html .= '
         <h1>VEHÍCULOS DISPONIBLES</h1>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
             <thead>
@@ -31,7 +29,7 @@ if ($result->num_rows > 0) {
     ';
 
     while ($row = $result->fetch_assoc()) {
-        echo '
+        $vehiculos_html .= '
             <tr>
                 <td>' . htmlspecialchars($row["MARCA"]) . '</td>
                 <td>' . htmlspecialchars($row["MODELO"]) . '</td>
@@ -44,35 +42,40 @@ if ($result->num_rows > 0) {
         ';
     }
 
-    echo '
+    $vehiculos_html .= '
             </tbody>
         </table>
     ';
 } else {
-    echo "<h3>No hay vehículos para mostrar actualmente.</h3>";
+    $vehiculos_html .= "<h3>No hay vehículos para mostrar actualmente.</h3>";
 }
 
-// Cerrar conexión
 $conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Vehículos</title> 
+    <meta charset="utf-8">
+    <title>Vehículos</title>
 </head>
 <body>
-  <div style="position: absolute; top: 20px; right: 20px;">
-    <form action="show_user.php?user=".urldecode($userlogin) method="get">
-      <button type="submit">Ver perfil</button>
+
+<!-- Botón para ver el perfil -->
+<div style="position: absolute; top: 20px; right: 20px;">
+    <form action="<?php echo 'show_user.php?user=' . urlencode($userlogin); ?>" method="get">
+        <button type="submit">Ver perfil</button>
     </form>
-  </div>
+</div>
 
-  <br>
+<!-- Mostrar vehículos -->
+<?php echo $vehiculos_html; ?>
 
-  <form action="add_item.php" method="get"> 
+<!-- Botón para añadir vehículo -->
+<br>
+<form action="add_item.php" method="get">
     <button type="submit">Añadir vehículo</button>
-  </form>
+</form>
+
 </body>
 </html>
