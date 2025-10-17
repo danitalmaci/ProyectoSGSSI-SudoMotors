@@ -35,9 +35,9 @@
         return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(s);
     }
 
-    function validAno(ano) {
-        return (/^\d+$/).test(String(ano).trim());
-    }
+	function validAno(ano) {
+		return (/^\d{4}$/).test(String(ano).trim());
+	}
 
     function validKms(kms) {
         return (/^\d+$/).test(String(kms).trim());
@@ -58,7 +58,7 @@
 
         if (name === 'ano') {
             if (!validAno(val)) {
-                span.textContent = 'El año debe ser un número.';
+                span.textContent = 'El año debe ser un número de 4 digitos.';
                 return false;
             }
             return true;

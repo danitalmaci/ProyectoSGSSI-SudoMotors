@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result && $result->num_rows > 0) {
         $userData = $result->fetch_assoc();
+        session_start(); // Se inicia la sesión
         $_SESSION['username'] = $userData['USERNAME']; // Guardamos usuario en sesión
         header("Location: items.php"); // Redirigimos a la lista de vehículos
         exit;

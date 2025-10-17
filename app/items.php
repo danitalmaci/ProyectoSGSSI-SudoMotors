@@ -3,9 +3,7 @@ session_start();
 
 // Conexión a la base de datos
 include 'connection.php';
-
-// Obtener el usuario de la sesión
-$userlogin = $_SESSION['username'];
+session_start();
 
 // Consulta para obtener los vehículos
 $sql = "SELECT MARCA, MODELO, MATRICULA FROM VEHICULO";
@@ -61,19 +59,16 @@ $conn->close();
 </head>
 <body>
 
-<!-- Botón para ver el perfil -->
 <div style="position: absolute; top: 20px; right: 20px;">
-    <form action="<?php echo 'show_user.php?user=' . urlencode($userlogin); ?>" method="get">
+    <form action="show_user.php" method="POST">
         <button type="submit">Ver perfil</button>
     </form>
 </div>
 
-<!-- Mostrar vehículos -->
 <?php echo $vehiculos_html; ?>
 
-<!-- Botón para añadir vehículo -->
 <br>
-<form action="add_item.php" method="get">
+<form action="add_item.php" method="GET">
     <button type="submit">Añadir vehículo</button>
 </form>
 

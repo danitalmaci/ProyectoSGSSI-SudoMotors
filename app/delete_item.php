@@ -6,29 +6,33 @@
 // Datos de conexión a la base de datos
 include 'connection.php'; 
 
-// Buscar los datos del vehiculo
-$query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='" . $_SESSION['matricula'] . "'");
+// Comprobar que se ha pasasdo la matricula correctamente
+if (isset($_GET['matricula'])) {
+    $matricula = $_GET['matricula'];
+    
+	// Buscar los datos del vehiculo
+	$query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='$matricula'");
 
-if (!$query || mysqli_num_rows($query) < 0) {
-        echo "Vehiculo no encontrado.";
-        exit;
-}
+	if (!$query || mysqli_num_rows($query) < 0) {
+		    echo "Vehiculo no encontrado.";
+		    exit;
+	}
 
-$vehiculo_data = mysqli_fetch_assoc($query);
+	$vehiculo_data = mysqli_fetch_assoc($query);
 
-// Borrar vehiculo
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    mysqli_query($conn, "DELETE FROM VEHICULO WHERE MATRICULA='" . $_SESSION['matricula'] . "'");
-    unset($_SESSION['matricula']); // Limpia la matrícula de la sesión
+	// Borrar vehiculo
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		mysqli_query($conn, "DELETE FROM VEHICULO WHERE MATRICULA= '$matricula'");
 
-    // Mostrar mensaje de éxito con JavaScript y redirigir
-    echo "
-    <script>
-        alert(' El vehículo se ha borrado con éxito.');
-        window.location.href = 'index.php';
-    </script>
-    ";
-    exit;
+		// Mostrar mensaje de éxito con JavaScript y redirigir
+		echo "
+		<script>
+		    alert(' El vehículo se ha borrado con éxito.');
+		    window.location.href = 'index.php';
+		</script>
+		";
+		exit;
+	}
 }
 
 // Cerrar conexión

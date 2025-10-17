@@ -95,19 +95,20 @@ $conn->close();
    	  </label><br>
 
       <label>Kilómetros:<br>
-      <input type="number" name="kms" required min="0" value="<?php echo $v_kilometros; ?>">
+      <input type="text" name="kms" required min="0" value="<?php echo $v_kilometros; ?>">
       <?php if (isset($errors['kms'])): ?>
       <span style="color:red;"><?php echo htmlspecialchars($errors['kms']); ?></span>
       <?php endif; ?>
       </label><br>
     
       <label>Año:<br>
-      <input type="number" name="ano" required min="1800" value="<?php echo $v_ano; ?>">
+      <input type="text" name="ano" required min="1800" value="<?php echo $v_ano; ?>">
       <?php if (isset($errors['ano'])): ?>
-     s <span style="color:red;"><?php echo htmlspecialchars($errors['ano']); ?></span>
+	  <span style="color:red;"><?php echo htmlspecialchars($errors['ano']); ?></span>
       <?php endif; ?>
       </label><br>
-
+      
+	<br>
       <button type="submit">Guardar vehículo</button>
   </form>
 

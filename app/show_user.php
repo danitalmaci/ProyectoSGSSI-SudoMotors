@@ -6,7 +6,9 @@
 // Datos de conexión a la base de datos
 include 'connection.php';
 
-$user=$_GET['user'] ?? 'Unknown';
+// Iniciar la sesion
+session_start();
+$user=$_SESSION['usuario'] ?? "unknown";
 
 $sql="SELECT * FROM USUARIO WHERE USERNAME= '$user'";
 $result=$conn->query($sql);
@@ -21,6 +23,9 @@ if ($result->num_rows > 0) {
 } else {
     die("Usuario no encontrado.");
 }
+
+// Cerrar conexión
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +48,3 @@ if ($result->num_rows > 0) {
 </body>
 </html>
 
-<?php
-$conn->close();
-?>
