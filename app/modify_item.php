@@ -61,10 +61,10 @@ $conn->close();
     	<input type="text" name="modelo" value="<?= htmlspecialchars($vehiculo_data['MODELO']) ?>" required><br>
 
     	<label>Año:</label>
-    	<input type="number" name="ano" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
+    	<input type="number" name="ano" min="1800" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
     	
     	<label>Kilómetros:</label>
-    	<input type="number" name="kms" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
+    	<input type="number" name="kms" min="0" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
 
 	<button type="button" id="item_modify_submit">Guardar cambios</button>
 </form>

@@ -59,7 +59,7 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    	<title>Modificar 	usuario</title>
+    	<title>Modificar usuario</title>
 </head>
 <body>
 <h1>Modificar tus datos</h1>
