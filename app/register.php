@@ -1,8 +1,14 @@
 <?php
 
+// ------------------------------------------------------------
+// Formulario para registrarse
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php'; 
 
-$message = ''; //Variable para almacenar errores o mensajes para mostrar en la página.
+//Variable para almacenar errores o mensajes para mostrar en la página.
+$message = ''; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha enviado por POST
     $username     = $_POST['usuario'] ?? '';
@@ -53,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
         $message = "Error preparando comprobación: " . htmlspecialchars($conn->error, ENT_QUOTES, 'UTF-8');
     }
 }
+
 //Recuperamos los valores enviados por el formulario
 $v_usuario   = htmlspecialchars($_POST['usuario'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_nombre    = htmlspecialchars($_POST['nombre'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -61,6 +68,9 @@ $v_dni       = htmlspecialchars($_POST['dni'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_email     = htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_telefono  = htmlspecialchars($_POST['telefono'] ?? '', ENT_QUOTES, 'UTF-8');
 $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8');
+
+// Cerrar conexión
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -125,5 +135,6 @@ $v_f_nac     = htmlspecialchars($_POST['f_nacimiento'] ?? '', ENT_QUOTES, 'UTF-8
   </form>
 
   <script src="js/comprobacionDatos.js"></script>
+  
 </body>
 </html>

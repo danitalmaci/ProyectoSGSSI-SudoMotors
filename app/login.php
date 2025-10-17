@@ -1,4 +1,9 @@
 <?php session_start();
+// ------------------------------------------------------------
+// Formulario para Iniciar Sesión
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php'; 
 
 $message="";
@@ -19,6 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = "Usuario o contraseña incorrecto.";
     }
 }
+
+// Cerrar conexión
+$conn->close();
 ?>
 
 <!DOCTYPE html>

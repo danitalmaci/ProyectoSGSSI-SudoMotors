@@ -1,5 +1,11 @@
 <?php
+// ------------------------------------------------------------
+// Ver Perfil
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php';
+
 $user=$_GET['user'] ?? 'Unknown';
 
 $sql="SELECT * FROM USUARIO WHERE USERNAME= '$user'";

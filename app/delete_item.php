@@ -1,5 +1,10 @@
-?php session_start();
-include 'connection.php';
+<?php
+// ------------------------------------------------------------
+// Formulario para borrar un vehículo
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
+include 'connection.php'; 
 
 // Buscar los datos del vehiculo
 $query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='" . $_SESSION['matricula'] . "'");
@@ -25,6 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ";
     exit;
 }
+
+// Cerrar conexión
+$conn->close();
+?>
 
  
 

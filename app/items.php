@@ -1,11 +1,9 @@
 <?php
-
 // ------------------------------------------------------------
-// Listado de coches
+// Listado de Vehiculos
 // ------------------------------------------------------------
 
-
-// Datos de conexión a la base de datos (contenedor "db")
+// Datos de conexión a la base de datos
 include 'connection.php';
 
 // Consulta: obtener todos los datos necesarios de los vehiculos
@@ -15,13 +13,13 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Mostrar listado de vehiculos con sus respectivos atributos
     echo '
-        <h1>VEHICULOS</h1>
+        <h1>VEHÍCULOS DISPONIBLES</h1>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
             <thead>
                 <tr>
                     <th>Marca</th>
                     <th>Modelo</th>
-                    <th>Matricula</th>
+                    <th>Matrícula</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,46 +30,45 @@ if ($result->num_rows > 0) {
             <tr>
                 <td>' . htmlspecialchars($row["MARCA"]) . '</td>
                 <td>' . htmlspecialchars($row["MODELO"]) . '</td>
-                <td>' . htmlspecialchars($row["MATRICULA"]) . '</td>
+                <td>
+                    <a href="show_item.php?matricula=' . urlencode($row["MATRICULA"]) . '">
+                        ' . htmlspecialchars($row["MATRICULA"]) . '
+                    </a>
+                </td>
             </tr>
         ';
     }
 
-    // Aquí cerramos correctamente la tabla antes de seguir
     echo '
             </tbody>
         </table>
     ';
 } else {
-    echo "No hay vehiculos para mostrar actualmente.";
+    echo "<h3>No hay vehículos para mostrar actualmente.</h3>";
 }
 
-// 🔹 Ahora imprimimos el botón y el formulario (ya fuera de la tabla)
-echo '
-    <button class="btn-add" onclick="mostrarFormulario()">Añadir vehículo</button>
-
-    <form id="form_añadir_vehiculo" action="guardar_vehiculo.php" method="POST" style="margin-top:20px;">
-        <h2>Nuevo vehículo</h2>
-        
-        <label>Matrícula:</label><br>
-        <input type="text" name="Matricula" required><br><br>
-        
-        <label>Marca:</label><br>
-        <input type="text" name="Marca" required><br><br>
-
-        <label>Modelo:</label><br>
-        <input type="text" name="Modelo" required><br><br>
-        
-        <label>Kilometros:</label><br>
-        <input type="text" name="Kilometros" required><br><br>
-        
-        <label>Año:</label><br>
-        <input type="text" name="Anio" required><br><br>
-
-        <button type="submit" class="btn-save">Guardar cambios</button>
-    </form>
-';
-
+// Cerrar conexión
 $conn->close();
 ?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Vehículos</title> 
+</head>
+<body>
+	<div style="position: absolute; top: 20px; right: 20px;">
+            <form action="show_user.php" method="get">
+                <button type="submit">Ver perfil</button>
+            </form>
+    </div>
+	<br>
+    <form action="add_item.php" method="get"> 
+        <button type="submit">Añadir vehículo</button>
+    </form>
+</body>
+</html>
+
 

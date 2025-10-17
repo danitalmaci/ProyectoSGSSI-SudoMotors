@@ -1,5 +1,9 @@
 <?php	
-session_start();
+// ------------------------------------------------------------
+// Ver información del vehiculo	
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php';
 
 $item = $_SESSION['matricula'];
@@ -38,5 +42,7 @@ if ($result && $result->num_rows > 0) {
 } else {
     echo "No se encontró información del vehículo.";
 }
+
+// Cerrar conexión
 $conn->close();
 ?>

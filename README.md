@@ -32,6 +32,14 @@ docker-compose up
 
 ### 4. Entrar a phpMyAdmin mediante localhost:8890
 
-### 5. Importamos "database.sql"
+### 5. Importar "database.sql"
+
+## Instrucciónes para cierre del proyecto
+
+### 1. Abrir una terminal nueva y ejecutar el comando de cierre de servicio
+
+```bash
+docker-compose down
+```
 
 

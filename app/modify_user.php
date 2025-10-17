@@ -1,4 +1,9 @@
 <?php session_start();
+// ------------------------------------------------------------
+// Formulario para modificar Usuario
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php';
 
 // Comprobar si el usuario está identificado
@@ -46,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	header("Location: show_user.php?user=" . urlencode($new_username));
     	exit;
 }
+
+// Cerrar conexión
+$conn->close();
 ?>
 
 <!DOCTYPE html>

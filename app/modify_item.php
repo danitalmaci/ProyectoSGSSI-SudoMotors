@@ -1,4 +1,9 @@
 <?php session_start();
+// ------------------------------------------------------------
+// Formulario para modificar vehiculo
+// ------------------------------------------------------------
+
+// Datos de conexión a la base de datos
 include 'connection.php';
 
 // Buscar los datos del usuario
@@ -33,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	header("Location: show_item.php?item=" . urlencode($new_matricula));
     	exit;
 }
+
+// Cerrar conexión
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <h1>Modificar tus datos</h1>
 <form id="item_modify_form" method="post">
-	<label>Matricula:</label>
+		<label>Matricula:</label>
     	<input type="text" name="matricula" value="<?= htmlspecialchars($vehiculo_data['MATRICULA']) ?>" required><br>
     	
     	<label>Marca:</label>
@@ -53,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	<input type="text" name="modelo" value="<?= htmlspecialchars($vehiculo_data['MODELO']) ?>" required><br>
 
     	<label>Año:</label>
-    	<input type="text" name="ano" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
+    	<input type="number" name="ano" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
     	
-    	<label>Kilometros:</label>
-    	<input type="text" name="kms" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
+    	<label>Kilómetros:</label>
+    	<input type="number" name="kms" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
 
 	<button type="button" id="item_modify_submit">Guardar cambios</button>
 </form>
@@ -64,5 +72,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="js/comprobacionVehiculo.js"></script>
 
 </body>
-
 </html>

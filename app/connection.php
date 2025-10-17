@@ -1,4 +1,8 @@
 <?php
+// ------------------------------------------------------------
+// Conexión
+// ------------------------------------------------------------
+
 $hostname = "db";
 $bdusername = "admin";
 $password = "test";
@@ -11,6 +15,5 @@ $conn = mysqli_connect($hostname, $bdusername, $password, $db);
 if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
-
 
 ?>
