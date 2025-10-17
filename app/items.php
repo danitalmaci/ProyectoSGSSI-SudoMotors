@@ -9,7 +9,7 @@ session_start(); // 🔹 Necesario para acceder a $_SESSION
 include 'connection.php';
 
 // Obtenemos el usuario desde la sesión
-$userlogin = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+$userlogin = $_SESSION['username'];
 
 // Consulta: obtener todos los datos necesarios de los vehículos
 $sql = "SELECT MARCA, MODELO, MATRICULA FROM VEHICULO";
