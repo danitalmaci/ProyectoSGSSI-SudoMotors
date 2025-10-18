@@ -130,13 +130,22 @@
             }
             return true;
         }
+        
+        if (name === 'confirmar_contrasena') {
+            const original = document.querySelector('input[name="contrasena"]').value.trim();
+            if (val !== original) {
+                span.textContent = 'Las contraseñas no coinciden.';
+                return false;
+            }
+            return true;
+        }
 
         return true; // Para cualquier otro campo no definido
     }
 
     function enviarFormulario(formId) {
         const form = document.getElementById(formId);
-        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="usuario"], input[name="contrasena"]');
+        const inputs = form.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="dni"], input[name="telefono"], input[name="f_nacimiento"], input[name="email"], input[name="usuario"], input[name="contrasena"], input[name="confirmar_contrasena"]');
     
         let todoOk = true;
 

@@ -13,6 +13,7 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha enviado por POST
     $username     = $_POST['usuario'] ?? '';
     $password     = $_POST['contrasena'] ?? '';
+    $confirm_password = $_POST['confirmar_contrasena'] ?? '';
     $nombre       = $_POST['nombre'] ?? '';
     $apellidos    = $_POST['apellidos'] ?? '';
     $dni          = $_POST['dni'] ?? '';
@@ -30,13 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
         $exists = $res->fetch_assoc(); //Toma la primera fila como array asociativo, null si no hay filas.
         $stmt->close();
 
+        $errors = [];
+
+        if ($password !== $confirm_password) {
+          $errors['confirmar_contrasena'] = "Las contraseñas no coinciden.";
+        }
+
         if ($exists) { //Si no es null, es decir, si existe alguna fila en la que coincide algún elemento.
-          $errors = []; 
           if ($exists['USERNAME'] === $username) $errors['usuario'] = "El usuario ya existe.";
-            if ($exists['DNI'] === $dni) $errors['dni'] = "El DNI ya está registrado.";
-            if ($exists['EMAIL'] === $email) $errors['email'] = "El email ya está en uso.";
-            if ((string)$exists['TELEFONO'] === $telefono) $errors['telefono'] = "El teléfono ya está en uso.";
-        } else { //Si no coincide ninguna, insertamos a la tabla.
+          if ($exists['DNI'] === $dni) $errors['dni'] = "El DNI ya está registrado.";
+          if ($exists['EMAIL'] === $email) $errors['email'] = "El email ya está en uso.";
+          if ((string)$exists['TELEFONO'] === $telefono) $errors['telefono'] = "El teléfono ya está en uso.";
+        } 
+
+        if (empty($errors)) { //Si no hay errores.
             $insertSql = "INSERT INTO USUARIO (DNI, NOMBRE, APELLIDOS, TELEFONO, EMAIL, F_NACIMIENTO, CONTRASENA, USERNAME)
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt2 = $conn->prepare($insertSql);
@@ -96,6 +104,13 @@ $conn->close();
 
     <label>Contraseña:<br>
       <input type="password" name="contrasena" required>
+    </label><br>
+
+    <label>Confirmar contraseña:<br>
+      <input type="password" name="confirmar_contrasena" required>
+      <?php if (isset($errors['confirmar_contrasena'])): ?>
+        <span style="color:red;"><?php echo htmlspecialchars($errors['confirmar_contrasena']); ?></span>
+      <?php endif; ?>
     </label><br>
 
     <label>Nombre:<br>
