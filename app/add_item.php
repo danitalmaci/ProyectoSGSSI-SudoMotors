@@ -71,6 +71,10 @@ $conn->close();
   <title>Añadir vehículo</title>
 </head>
 <body>
+<div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+	<a href="items.php">Inicio </a><br>
+	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>
+</div>
   <h1>Añadir nuevo vehículo</h1>
 
   <?php if (!empty($message)): ?>

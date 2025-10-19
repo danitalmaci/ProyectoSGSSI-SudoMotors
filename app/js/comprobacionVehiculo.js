@@ -36,7 +36,7 @@
     }
 
 	function validAno(ano) {
-		return (/^\d{4}$/).test(String(ano).trim());
+		return (/^\d+$/).test(String(ano).trim());
 	}
 
     function validKms(kms) {

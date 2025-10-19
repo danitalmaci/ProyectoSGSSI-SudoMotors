@@ -6,6 +6,8 @@
 // Datos de conexión a la base de datos
 include 'connection.php';
 
+$vehiculos_html = "";
+
 if (isset($_GET['matricula'])) {
     $matricula = $_GET['matricula'];
 
@@ -40,6 +42,10 @@ $conn->close();
     <title>Información vehiculo</title>
 </head>
 <body>
+<div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+	<a href="items.php">Inicio </a><br>
+	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>
+</div>
 	<h1>Datos del vehículo seleccionado</h1>
 
 <?php echo $vehiculos_html; ?>
@@ -49,6 +55,9 @@ $conn->close();
         <form action="modify_item.php" method="get">
         	<input type="hidden" name="matricula" value="<?php echo htmlspecialchars($row['MATRICULA']); ?>">
             <button type="submit">Modificar Datos</button>
+            <button type="button" onclick="window.location.href='items.php'">
+    		Cancelar
+	    </button>
         </form>
 		
 		<br>

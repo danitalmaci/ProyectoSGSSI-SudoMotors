@@ -27,6 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
+// Cerrar sesión si se llama con ?logout=1
+if (isset($_GET['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+
 $conn->close();
 ?>
 

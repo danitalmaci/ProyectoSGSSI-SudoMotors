@@ -1,7 +1,4 @@
 <?php session_start();
-// ------------------------------------------------------------
-// Formulario para modificar vehiculo
-// ------------------------------------------------------------
 
 // Datos de conexión a la base de datos
 include 'connection.php';
@@ -34,11 +31,11 @@ if (isset($_GET['matricula'])) {
 		    	MODELO='$new_modelo',
 		    	ANO='$new_ano',
 		    	KMS='$new_kms'
-		    	WHERE MATRICULA='$matricula";
+		    	WHERE MATRICULA='$matricula'";
 
 		$result = mysqli_query($conn, $sql);
 		
-	   	header("Location: show_item.php?item=" . urlencode($new_matricula));
+	   	header("Location: show_item.php?matricula=" . urlencode($new_matricula));
 			exit;
 	}
 }
@@ -53,6 +50,10 @@ $conn->close();
     	<title>Modificar datos del vehiculo</title>
 </head>
 <body>
+<div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+	<a href="items.php">Inicio </a><br>
+	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>
+</div>
 <h1>Modificar datos del vehiculo</h1>
 <form id="item_modify_form" method="post">
 		<label>Matricula:</label>
@@ -64,13 +65,17 @@ $conn->close();
     	<label>Modelo:</label>
     	<input type="text" name="modelo" value="<?= htmlspecialchars($vehiculo_data['MODELO']) ?>" required><br>
     	
-    	<label>Kilómetros:</label>
-    	<input type="text" name="kms" min="0" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
-    	
     	<label>Año:</label>
     	<input type="text" name="ano" min="1800" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
+    	
+    	<label>Kilómetros:</label>
+    	<input type="text" name="kms" min="0" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required><br>
 
 	<button type="button" id="item_modify_submit">Guardar cambios</button>
+	<button type="button" onclick="window.location.href='show_item.php?matricula=<?= urlencode($vehiculo_data['MATRICULA']) ?>'">
+    		Cancelar
+	</button>
+
 </form>
 
 <script src="js/comprobacionVehiculo.js"></script>

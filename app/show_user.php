@@ -8,7 +8,7 @@ include 'connection.php';
 
 // Iniciar la sesion
 session_start();
-$user=$_SESSION['usuario'] ?? "unknown";
+$user=$_SESSION['username'] ?? "unknown";
 
 $sql="SELECT * FROM USUARIO WHERE USERNAME= '$user'";
 $result=$conn->query($sql);
@@ -35,16 +35,23 @@ $conn->close();
     <title>Perfil de <?= htmlspecialchars($fullname) ?></title>
 </head>
 <body>
+<div style="position: absolute; top: 20px; right: 20px;">
+    	<a href="items.php">Inicio </a><br>
+</div>
     <h1>Perfil de <?= htmlspecialchars($fullname) ?></h1>
 
     <p><strong>Usuario:</strong> <?= htmlspecialchars($user['USERNAME']) ?></p>
     <p><strong>Email:</strong> <?= htmlspecialchars($user['EMAIL']) ?></p>
     <p><strong>Teléfono:</strong> <?= htmlspecialchars($user['TELEFONO']) ?></p>
     <p><strong>DNI:</strong> <?= htmlspecialchars($user['DNI']) ?></p>
+    
+    <button type="button" onclick="window.location.href='modify_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
+    	Modificar
+    </button>
 
-    <a href="modify_user.php?user=<?= urlencode($user['USERNAME']) ?>">Modificar </a><br>
-
-    <p><a href="login.php">Volver al login</a></p>
+    <button type="button" onclick="window.location.href='login.php?logout=1'">
+    	Cerrar sesión
+    </button>
 </body>
 </html>
 

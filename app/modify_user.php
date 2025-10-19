@@ -62,6 +62,9 @@ $conn->close();
     	<title>Modificar usuario</title>
 </head>
 <body>
+<div style="position: absolute; top: 20px; right: 20px;">
+    	<a href="items.php">Inicio </a><br>
+</div>
 <h1>Modificar tus datos</h1>
 <form id="user_modify_form" method="post">
 	<label>Username:</label>
@@ -89,6 +92,9 @@ $conn->close();
 	<input type="date" name="f_nacimiento" value="<?= htmlspecialchars($user_data['F_NACIMIENTO']) ?>" required><br>
 
 	<button type="button" id="user_modify_submit">Guardar cambios</button>
+	<button type="button" onclick="window.location.href='show_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
+    		Cancelar
+	</button>
 </form>
 
 <script src="js/comprobacionDatos.js"></script>
