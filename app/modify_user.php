@@ -34,22 +34,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	$new_contrasena = $_POST['contrasena'];
     	$new_username = $_POST['username'];
 
-    	$sql = "UPDATE USUARIO SET 
+	$check_dni = mysqli_query($conn, "SELECT * FROM USUARIO WHERE DNI='$new_dni' AND USERNAME != '" . $_SESSION['username'] . "'");
+	if (mysqli_num_rows($check_dni) > 0) {
+    		echo "<p style='color:red;'>Error: Ya existe un usuario con ese DNI.</p>";
+	} else {
+    	// Si no existe, entonces sí actualizamos
+   	 $sql = "UPDATE USUARIO SET 
         	NOMBRE='$new_nombre',
-        	APELLIDOS='$new_apellidos',
-        	TELEFONO='$new_telefono',
-        	EMAIL='$new_email',
-        	F_NACIMIENTO='$new_f_nacimiento',
-        	CONTRASENA='$new_contrasena',
-        	USERNAME='$new_username',
-        	DNI='$new_dni'
-        	WHERE USERNAME='" . $_SESSION['username'] . "'";
+            	APELLIDOS='$new_apellidos',
+            	TELEFONO='$new_telefono',
+            	EMAIL='$new_email',
+            	F_NACIMIENTO='$new_f_nacimiento',
+            	CONTRASENA='$new_contrasena',
+            	USERNAME='$new_username',
+            	DNI='$new_dni'
+            	WHERE USERNAME='" . $_SESSION['username'] . "'";
 
-	$result = mysqli_query($conn, $sql);
+    	$result = mysqli_query($conn, $sql);
 
-	$_SESSION['username'] = $new_username;
+    	$_SESSION['username'] = $new_username;
     	header("Location: show_user.php?user=" . urlencode($new_username));
     	exit;
+    	}
 }
 
 // Cerrar conexión
@@ -102,3 +108,4 @@ $conn->close();
 </body>
 
 </html>
+

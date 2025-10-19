@@ -45,6 +45,10 @@ CREATE TABLE `USUARIO` (
 INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USERNAME`) VALUES
 ('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300', 'aitorjiji');
 
+INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USERNAME`) VALUES
+('12341234S', 'Maria', 'Fernandez Viana', '123456798', 'mariafer@gmail.com', '2005/09/12', 'FordFiesta', 'mariafer');
+
+
 
 -- --------------------------------------------------------
 
@@ -66,6 +70,9 @@ CREATE TABLE `VEHICULO` (
 
 INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
 ('7777 XDD', 'Kia', 'Sportage', '2018', '205623');
+INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
+('1234 PDF', 'Ford', 'Sportage', '2005', '218922');
+
 
 --
 -- Índices para tablas volcadas
