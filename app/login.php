@@ -11,7 +11,7 @@ $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $_POST["user"];
-    $password = $_POST["password"];
+    $password = $_POST["contrasena"];
 
     $sql = "SELECT * FROM USUARIO WHERE USERNAME = '$user' AND CONTRASENA = '$password'";
     $result = $conn->query($sql);
@@ -56,11 +56,28 @@ $conn->close();
         <input type="text" id="user" name="user" required><br><br>
 
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
+        <input type="password" id="contrasena" name="contrasena" required>
+        <input type="checkbox" id="togglePass"> Mostrar contraseña
+        <br><br>
+	
+	<div>
         <button type="submit">Iniciar sesión</button>
         &nbsp;
         <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
+        <div>
+        <div style="margin-top: 10px;">
+        <button type="button" onclick="window.location.href='show_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
+    		Cancelar
+	</button>
+	<div>
     </form>
+    <script>
+      const pass1 = document.getElementById('contrasena');
+      const toggle1 = document.getElementById('togglePass');
+
+      toggle1.addEventListener('change', () => {
+        pass1.type = toggle1.checked ? 'text' : 'password';
+      });
+    </script>
 </body>
 </html>

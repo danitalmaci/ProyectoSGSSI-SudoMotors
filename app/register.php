@@ -53,7 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
                 if ($stmt2->execute()) { //Si la ejecución funciona
                     $stmt2->close();
                     $conn->close(); 
-                    header("Location: login.php");
+                    session_start(); // Se inicia la sesión
+        	    $_SESSION['username'] = $userData['USERNAME']; // Guardamos usuario en sesión
+                    header("Location: items.php");
                     exit;
                 } else {
                     $message = "Error al insertar usuario: " . htmlspecialchars($stmt2->error, ENT_QUOTES, 'UTF-8');
@@ -103,15 +105,17 @@ $conn->close();
     </label><br>
 
     <label>Contraseña:<br>
-      <input type="password" name="contrasena" required>
+      <input type="password" name="contrasena" id="contrasena" required>
+      <input type="checkbox" id="togglePass"> Mostrar contraseña
     </label><br>
 
     <label>Confirmar contraseña:<br>
-      <input type="password" name="confirmar_contrasena" required>
+      <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
       <?php if (isset($errors['confirmar_contrasena'])): ?>
         <span style="color:red;"><?php echo htmlspecialchars($errors['confirmar_contrasena']); ?></span>
       <?php endif; ?>
     </label><br>
+
 
     <label>Nombre:<br>
       <input type="text" name="nombre" required value="<?php echo $v_nombre; ?>">
@@ -147,9 +151,22 @@ $conn->close();
     </label><br><br>
 
     <button type="button" id="register_submit">Registrarme</button>
+    <button type="button" onclick="window.location.href='login.php'">
+    		Cancelar
+    </button>
   </form>
 
   <script src="js/comprobacionDatos.js"></script>
   
+  <script>
+    const pass1 = document.getElementById('contrasena');
+    const pass2 = document.getElementById('confirmar_contrasena');
+    const toggle1 = document.getElementById('togglePass');
+
+    toggle1.addEventListener('change', () => {
+      pass1.type = toggle1.checked ? 'text' : 'password';
+      pass2.type = toggle1.checked ? 'text' : 'password';
+    });
+  </script>
 </body>
 </html>
