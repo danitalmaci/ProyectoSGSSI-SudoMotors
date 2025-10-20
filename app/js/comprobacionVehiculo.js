@@ -39,7 +39,7 @@
         if (ano === null || ano === undefined) return false;
         ano = String(ano).trim();
         if (ano.length === 0) return false;
-        return /^\d+$/.test(ano);
+        return (/^\d{4}$/).test(String(ano).trim());
     }
 
     function validKms(s) {
