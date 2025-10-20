@@ -88,9 +88,7 @@ $conn->close();
     	<div style="margin-top: 20px;">
 		<div style="display: flex; gap: 10px;">
 			<button type="button" id="item_modify_submit">Guardar cambios</button>
-			<button type="button" onclick="window.location.href='show_item.php?matricula=<?= urlencode($vehiculo_data['MATRICULA']) ?>'">
-    				Cancelar
-			</button>
+			<button type="button" onclick="window.location.href='show_item.php?matricula=<?= urlencode($vehiculo_data['MATRICULA']) ?>'"> Cancelar </button>
 		</div>
 	</div>
 </form>

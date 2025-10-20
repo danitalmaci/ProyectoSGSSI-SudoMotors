@@ -60,6 +60,7 @@ $conn->close();
 <head>
     <meta charset="utf-8">
     <title>Vehículos</title>
+    <link rel="stylesheet" href="css/items.css">
 </head>
 <body>
 <?php if($successMessage): ?>

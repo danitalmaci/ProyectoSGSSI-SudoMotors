@@ -64,7 +64,7 @@
         
         if (name === 'matricula') {
             if (!validMatricula(val)) {
-                span.textContent = 'La matrícula debe tener el formato 1234 ABC (con o sin espacio).';
+                span.textContent = 'La matrícula debe tener el formato 1234 ABC.';
                 return false;
             }
             input.value = val.toUpperCase();
@@ -89,7 +89,7 @@
 
         if (name === 'ano') {
             if (!validAno(val)) {
-                span.textContent = 'El año debe ser un número mayor o igual a 1800.';
+                span.textContent = 'El año debe ser un número mayor o igual a 1800 de 4 digitos.';
                 return false;
             }
             return true;
