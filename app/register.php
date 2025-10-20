@@ -1,4 +1,5 @@
 <?php
+
 // ------------------------------------------------------------
 // Formulario para registrarse
 // ------------------------------------------------------------
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
                     $stmt2->close();
                     $conn->close(); 
                     session_start(); // Se inicia la sesión
-        	    $_SESSION['username'] = $userData['USERNAME']; // Guardamos usuario en sesión
+        	    $_SESSION['username'] = $username; // Guardamos usuario en sesión
                     header("Location: items.php");
                     exit;
                 } else {
