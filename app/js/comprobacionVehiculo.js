@@ -16,7 +16,7 @@
     // COMPROBACIONES
     function validMatricula(matricula) {
         if (typeof matricula !== 'string') return false;
-   		matricula = matricula.trim();
+   		matricula = matricula.trim().toUpperCase();
     	if (matricula.length === 0) return false;
     	return /^[0-9]{4}\s?[A-Z]{3}$/.test(matricula);
     }
@@ -39,10 +39,11 @@
         if (ano === null || ano === undefined) return false;
         ano = String(ano).trim();
         if (ano.length === 0) return false;
-        return (/^\d{4}$/).test(String(ano).trim());
+        if (!/^\d{4}$/.test(ano)) return false;
+        return Number(ano) >= 1800;
     }
 
-    function validKms(s) {
+    function validKms(kms) {
         if (kms === null || kms === undefined) return false;
         kms = String(kms).trim();
         if (kms.length === 0) return false;
@@ -56,19 +57,39 @@
         const span = getErrorSpan(input);
         span.textContent = '';
 
+        if (val.length === 0) {
+            span.textContent = 'Este campo no puede estar vacío.';
+            return false;
+        }
+        
         if (name === 'matricula') {
             if (!validMatricula(val)) {
-                span.textContent = 'La matrícula debe tener el siguiente formato: 1111 ZZZ';
+                span.textContent = 'La matrícula debe tener el formato 1234 ABC (con o sin espacio).';
                 return false;
             }
-            // Convertir a mayúsculas
             input.value = val.toUpperCase();
-            return true; // No hay más validación
+            return true;
+        }
+        
+        if (name === 'marca') {
+            if (!validMarca(val)) {
+                span.textContent = 'La marca solo puede contener letras, espacios o guiones.';
+                return false;
+            }
+            return true;
+        }
+
+        if (name === 'modelo') {
+            if (!validModelo(val)) {
+                span.textContent = 'El modelo solo puede contener letras, espacios o guiones.';
+                return false;
+            }
+            return true;
         }
 
         if (name === 'ano') {
             if (!validAno(val)) {
-                span.textContent = 'El año debe ser un número de 4 digitos.';
+                span.textContent = 'El año debe ser un número mayor o igual a 1800.';
                 return false;
             }
             return true;

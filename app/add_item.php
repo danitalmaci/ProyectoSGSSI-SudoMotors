@@ -128,7 +128,7 @@ $conn->close();
         <?php endif; ?>
     </label><br><br>
 
-    <button type="submit" id="item_add_submit" >Guardar vehículo</button>
+    <button type="button" id="item_add_submit" >Guardar vehículo</button>
     <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
 </form>
 

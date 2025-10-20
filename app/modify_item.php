@@ -80,10 +80,10 @@ $conn->close();
     	<input type="text" name="modelo" value="<?= htmlspecialchars($vehiculo_data['MODELO']) ?>" required><br>
     	
     	<label>Año:</label>
-    	<input type="text" name="ano" min="1800" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
+    	<input type="text" name="ano" value="<?= htmlspecialchars($vehiculo_data['ANO']) ?>" required><br>
     	
     	<label>Kilómetros:</label>
-    	<input type="text" name="kms" min="0" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required ><br>
+    	<input type="text" name="kms" value="<?= htmlspecialchars($vehiculo_data['KMS']) ?>" required ><br>
     	
     	<div style="margin-top: 20px;">
 		<div style="display: flex; gap: 10px;">
