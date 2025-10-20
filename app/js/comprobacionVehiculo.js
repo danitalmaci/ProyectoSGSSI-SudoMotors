@@ -51,6 +51,10 @@
         span.textContent = '';
 
         if (name === 'matricula') {
+        	if (!validMatricula(val)) {
+                span.textContent = 'La matrícula debe tener el siguiente formato: 1111 ZZZ';
+                return false;
+            }
             // Convertir a mayúsculas
             input.value = val.toUpperCase();
             return true; // No hay más validación

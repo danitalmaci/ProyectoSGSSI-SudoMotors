@@ -26,7 +26,7 @@ if (isset($_GET['matricula'])) {
         echo "
         <script>
             alert('El vehículo se ha borrado con éxito.');
-            window.location.href = 'index.php';
+            window.location.href = 'items.php';
         </script>
         ";
         exit;
@@ -54,7 +54,7 @@ $conn->close();
 
     <form method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este vehículo? Esta acción no se puede deshacer.');">
         <button type="submit">Sí, borrar vehículo</button>
-        <button type="button" onclick="window.location.href='index.php'">Cancelar</button>
+        <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
     </form>
 </body>
 </html>
