@@ -14,33 +14,39 @@
     }
 
     // COMPROBACIONES
-    function validMatricula(s) {
-        if (typeof s !== 'string') return false;
-   		s = s.trim();
-    	if (s.length === 0) return false;
-    	return /^[0-9]{4}\s?[A-Z]{3}$/.test(s);
+    function validMatricula(matricula) {
+        if (typeof matricula !== 'string') return false;
+   		matricula = matricula.trim();
+    	if (matricula.length === 0) return false;
+    	return /^[0-9]{4}\s?[A-Z]{3}$/.test(matricula);
     }
     
-    function validMarca(s) {
-        if (typeof s !== 'string') return false;
-        s = s.trim();
-        if (s.length === 0) return false;
-        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(s);
+    function validMarca(marca) {
+        if (typeof marca !== 'string') return false;
+        marca = marca.trim();
+        if (marca.length === 0) return false;
+        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(marca);
     }
     
-    function validModelo(s) {
-        if (typeof s !== 'string') return false;
-        s = s.trim();
-        if (s.length === 0) return false;
-        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(s);
+    function validModelo(modelo) {
+        if (typeof modelo !== 'string') return false;
+        modelo = modelo.trim();
+        if (modelo.length === 0) return false;
+        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(modelo);
     }
 
 	function validAno(ano) {
-		return (/^\d+$/).test(String(ano).trim());
-	}
+        if (ano === null || ano === undefined) return false;
+        ano = String(ano).trim();
+        if (ano.length === 0) return false;
+        return /^\d+$/.test(ano);
+    }
 
-    function validKms(kms) {
-        return (/^\d+$/).test(String(kms).trim());
+    function validKms(s) {
+        if (kms === null || kms === undefined) return false;
+        kms = String(kms).trim();
+        if (kms.length === 0) return false;
+        return /^\d+$/.test(kms);
     }
 
     //Comprobar datos en funcion del nombre del campo
@@ -51,7 +57,7 @@
         span.textContent = '';
 
         if (name === 'matricula') {
-        	if (!validMatricula(val)) {
+            if (!validMatricula(val)) {
                 span.textContent = 'La matrícula debe tener el siguiente formato: 1111 ZZZ';
                 return false;
             }
