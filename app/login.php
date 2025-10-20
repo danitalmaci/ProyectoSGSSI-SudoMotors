@@ -66,7 +66,7 @@ $conn->close();
         <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
         <div>
         <div style="margin-top: 10px;">
-        <button type="button" onclick="window.location.href='show_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
+        <button type="button" onclick="window.location.href='index.php'">
     		Cancelar
 	</button>
 	<div>

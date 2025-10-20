@@ -47,6 +47,11 @@ if ($result->num_rows > 0) {
     $vehiculos_html .= "<h3>No hay vehículos para mostrar actualmente.</h3>";
 }
 
+$successMessage = "";
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    $successMessage = "El vehículo se ha añadido correctamente";
+}
+
 $conn->close();
 ?>
 
@@ -57,6 +62,9 @@ $conn->close();
     <title>Vehículos</title>
 </head>
 <body>
+<?php if($successMessage): ?>
+        <p style="color:green; font-weight:bold;"><?= htmlspecialchars($successMessage) ?></p>
+<?php endif; ?>
 
 <div style="position: absolute; top: 20px; right: 20px;">
 	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>

@@ -34,27 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	$new_contrasena = $_POST['contrasena'];
     	$new_username = $_POST['username'];
 
-	$check_dni = mysqli_query($conn, "SELECT * FROM USUARIO WHERE DNI='$new_dni' AND USERNAME != '" . $_SESSION['username'] . "'");
-	if (mysqli_num_rows($check_dni) > 0) {
-    		echo "<p style='color:red;'>Error: Ya existe un usuario con ese DNI.</p>";
-	} else {
-    	// Si no existe, entonces sí actualizamos
-   	 $sql = "UPDATE USUARIO SET 
-        	NOMBRE='$new_nombre',
-            	APELLIDOS='$new_apellidos',
-            	TELEFONO='$new_telefono',
-            	EMAIL='$new_email',
-            	F_NACIMIENTO='$new_f_nacimiento',
-            	CONTRASENA='$new_contrasena',
-            	USERNAME='$new_username',
-            	DNI='$new_dni'
-            	WHERE USERNAME='" . $_SESSION['username'] . "'";
+    	// Comprobar si ya existe otro usuario con el mismo DNI, email o username
+    	$check_username = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='$new_username' AND USERNAME != '" . $_SESSION['username'] . "'");
+    	$check_email    = mysqli_query($conn, "SELECT * FROM USUARIO WHERE EMAIL='$new_email' AND USERNAME != '" . $_SESSION['username'] . "'");
+    	$check_dni      = mysqli_query($conn, "SELECT * FROM USUARIO WHERE DNI='$new_dni' AND USERNAME != '" . $_SESSION['username'] . "'");
 
-    	$result = mysqli_query($conn, $sql);
+    	$errors = [];
+	if(mysqli_num_rows($check_username) > 0) $errors['username'] = "El usuario ya existe.";
+	if(mysqli_num_rows($check_email) > 0)    $errors['email']    = "El email ya está en uso.";
+	if(mysqli_num_rows($check_dni) > 0)      $errors['dni']      = "El DNI ya está registrado.";
 
-    	$_SESSION['username'] = $new_username;
-    	header("Location: show_user.php?user=" . urlencode($new_username));
-    	exit;
+
+    	if(empty($errors)) {
+    		// Si no existe, entonces sí actualizamos
+   	 	$sql = "UPDATE USUARIO SET 
+        		NOMBRE='$new_nombre',
+            		APELLIDOS='$new_apellidos',
+            		TELEFONO='$new_telefono',
+            		EMAIL='$new_email',
+            		F_NACIMIENTO='$new_f_nacimiento',
+            		CONTRASENA='$new_contrasena',
+            		USERNAME='$new_username',
+            		DNI='$new_dni'
+            		WHERE USERNAME='" . $_SESSION['username'] . "'";
+
+    		$result = mysqli_query($conn, $sql);
+
+    		$_SESSION['username'] = $new_username;
+    		header("Location: show_user.php?user=" . urlencode($new_username) . "&success=1");
+    		exit;
     	}
 }
 
@@ -69,14 +77,18 @@ $conn->close();
 </head>
 <body>
 <div style="position: absolute; top: 20px; right: 20px;">
-    	<a href="items.php">Inicio </a><br>
+    	<a href="items.php">Mostrar vehículos </a><br>
 </div>
 <h1>Modificar tus datos</h1>
 <form id="user_modify_form" method="post">
 	<label>Username:</label>
-    	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
-    	
-    	<label>Contraseña:</label>
+	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required>
+	<?php if(isset($errors['username'])): ?>
+    		<span style="color:red; display:block; font-size:0.9em;"><?= htmlspecialchars($errors['username']) ?></span>
+	<?php endif; ?>
+	<br>
+	
+	<label>Contraseña:</label>
     	<input type="password" name="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>
     	
     	<label>Nombre:</label>
@@ -86,21 +98,33 @@ $conn->close();
     	<input type="text" name="apellidos" value="<?= htmlspecialchars($user_data['APELLIDOS']) ?>" required><br>
     	
     	<label>DNI:</label>
-    	<input type="text" name="dni" value="<?= htmlspecialchars($user_data['DNI']) ?>" required><br>
-    	
-    	<label>Email:</label>
-    	<input type="email" name="email" value="<?= htmlspecialchars($user_data['EMAIL']) ?>" required><br>
+	<input type="text" name="dni" value="<?= htmlspecialchars($user_data['DNI']) ?>" required>
+	<?php if(isset($errors['dni'])): ?>
+    		<span style="color:red; display:block; font-size:0.9em;"><?= htmlspecialchars($errors['dni']) ?></span>
+	<?php endif; ?>
+	<br>
+
+	<label>Email:</label>
+	<input type="email" name="email" value="<?= htmlspecialchars($user_data['EMAIL']) ?>" required>
+	<?php if(isset($errors['email'])): ?>
+    		<span style="color:red; display:block; font-size:0.9em;"><?= htmlspecialchars($errors['email']) ?></span>
+	<?php endif; ?>
+	<br>
 
     	<label>Teléfono:</label>
     	<input type="text" name="telefono" value="<?= htmlspecialchars($user_data['TELEFONO']) ?>" required><br>
 
 	<label>Fecha de nacimiento:</label>
 	<input type="date" name="f_nacimiento" value="<?= htmlspecialchars($user_data['F_NACIMIENTO']) ?>" required><br>
-
-	<button type="button" id="user_modify_submit">Guardar cambios</button>
-	<button type="button" onclick="window.location.href='show_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
-    		Cancelar
-	</button>
+	
+	<div style="margin-top: 20px;">
+		<div style="display: flex; gap: 10px;">
+			<button type="button" id="user_modify_submit">Guardar cambios</button>
+			<button type="button" onclick="window.location.href='show_user.php?user=<?= urlencode($_SESSION['username']) ?>'">
+    				Cancelar
+			</button>
+		</div>
+	</div>
 </form>
 
 <script src="js/comprobacionDatos.js"></script>

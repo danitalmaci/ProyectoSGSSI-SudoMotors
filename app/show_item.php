@@ -31,6 +31,11 @@ if (isset($_GET['matricula'])) {
 	}
 }
 
+$successMessage = "";
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    $successMessage = "Los datos del vehículo se han actualizado correctamente";
+}
+
 // Cerrar conexión
 $conn->close();
 ?>
@@ -39,34 +44,37 @@ $conn->close();
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Información vehiculo</title>
+    <title>Información del vehículo</title>
 </head>
 <body>
 <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
-	<a href="items.php">Inicio </a><br>
+	<a href="items.php">Mostrar vehículos </a><br>
 	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>
 </div>
 	<h1>Datos del vehículo seleccionado</h1>
+	<?php if($successMessage): ?>
+        	<p style="color:green; font-weight:bold;"><?= htmlspecialchars($successMessage) ?></p>
+    	<?php endif; ?>
 
 <?php echo $vehiculos_html; ?>
-
- 	<div>
- 		<br>
-        <form action="modify_item.php" method="get">
-        	<input type="hidden" name="matricula" value="<?php echo htmlspecialchars($row['MATRICULA']); ?>">
+<div style="margin-top: 20px;">
+    <div style="display: flex; gap: 10px;">
+        <form action="modify_item.php" method="get" style="margin: 0;">
+            <input type="hidden" name="matricula" value="<?= htmlspecialchars($row['MATRICULA']) ?>">
             <button type="submit">Modificar Datos</button>
-            <button type="button" onclick="window.location.href='items.php'">
-    		Cancelar
-	    </button>
         </form>
-		
-		<br>
-        <form action="delete_item.php" method="get">
-        	<input type="hidden" name="matricula" value="<?php echo htmlspecialchars($row['MATRICULA']); ?>">
+
+        <form action="delete_item.php" method="get" style="margin: 0;">
+            <input type="hidden" name="matricula" value="<?= htmlspecialchars($row['MATRICULA']) ?>">
             <button type="submit">Eliminar Vehículo</button>
         </form>
     </div>
 
-
+    <div style="margin-top: 10px;">
+        <button type="button" onclick="window.location.href='items.php'">
+            Cancelar
+        </button>
+    </div>
+</div>
 </body>
 </html>

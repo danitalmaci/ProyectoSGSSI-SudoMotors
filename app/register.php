@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
     $f_nacimiento = $_POST['f_nacimiento'] ?? '';
 
     // Comprobación mínima: unicidad
-    $checkSql = "SELECT USERNAME, EMAIL, DNI, TELEFONO FROM USUARIO WHERE USERNAME=? OR EMAIL=? OR DNI=? OR TELEFONO=?";
+    $checkSql = "SELECT USERNAME, EMAIL, DNI FROM USUARIO WHERE USERNAME=? OR EMAIL=? OR DNI=?";
     $stmt = $conn->prepare($checkSql); //Devuelve false si hay fallo en la consulta
     if ($stmt) {
-        $stmt->bind_param('ssss', $username, $email, $dni, $telefono); //Con 'ssss' se indica que los 4 parámetros van a ser Strings. MySQL convierte la cadena a número en el caso de teléfono.
+        $stmt->bind_param('sss', $username, $email, $dni); //Con 'sss' se indica que los 4 parámetros van a ser Strings.
         $stmt->execute(); //Lanza la consulta
         $res = $stmt->get_result(); //Obtiene el resultado
         $exists = $res->fetch_assoc(); //Toma la primera fila como array asociativo, null si no hay filas.
@@ -41,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Entra solo si el formulario se ha
           if ($exists['USERNAME'] === $username) $errors['usuario'] = "El usuario ya existe.";
           if ($exists['DNI'] === $dni) $errors['dni'] = "El DNI ya está registrado.";
           if ($exists['EMAIL'] === $email) $errors['email'] = "El email ya está en uso.";
-          if ((string)$exists['TELEFONO'] === $telefono) $errors['telefono'] = "El teléfono ya está en uso.";
         } 
 
         if (empty($errors)) { //Si no hay errores.
@@ -104,10 +103,15 @@ $conn->close();
       <?php endif; ?>
     </label><br>
 
-    <label>Contraseña:<br>
-      <input type="password" name="contrasena" id="contrasena" required>
-      <input type="checkbox" id="togglePass"> Mostrar contraseña
-    </label><br>
+    <label>Contraseña:</label>
+    <div style="display:flex; align-items:center; gap:10px;">
+  	<input type="password" name="contrasena" id="contrasena" required>
+  	<input type="checkbox" id="togglePass"> Mostrar contraseña
+    </div>
+    <?php if (isset($errors['contrasena'])): ?>
+  	<div style="color:red; font-size:0.9em;"><?= htmlspecialchars($errors['contrasena']) ?></div>
+    <?php endif; ?>
+    <br>
 
     <label>Confirmar contraseña:<br>
       <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
