@@ -1,11 +1,12 @@
 <?php
-session_start();
 // ------------------------------------------------------------
 // Formulario para añadir Vehículo
 // ------------------------------------------------------------
 
 // Datos de conexión a la base de datos
 include 'connection.php';
+// Comienzo de sesión
+session_start();
 
 // Variable para mensajes de error o éxito
 $message = '';
@@ -91,9 +92,9 @@ $conn->close();
     <p style="color:red;"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
 <?php endif; ?>
 
-<form method="POST" action="">
+<form id="item_add_form" method="POST" action="">
     <label>Matrícula:<br>
-        <input type="text" name="matricula" required value="<?= $v_matricula ?>">
+        <input type="text" name="matricula" required placeholder="1111 ZZZ" required value="<?= $v_matricula ?>">
         <?php if (isset($errors['matricula'])): ?>
             <span style="color:red; display:block; font-size:0.9em;"><?= htmlspecialchars($errors['matricula']); ?></span>
         <?php endif; ?>
@@ -127,11 +128,10 @@ $conn->close();
         <?php endif; ?>
     </label><br><br>
 
-    <button type="submit">Guardar vehículo</button>
+    <button type="submit" id="item_add_submit" >Guardar vehículo</button>
     <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
 </form>
 
 <script src="js/comprobacionVehiculo.js"></script>
 </body>
 </html>
-

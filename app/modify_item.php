@@ -67,7 +67,7 @@ $conn->close();
 <h1>Modificar datos del vehiculo</h1>
 <form id="item_modify_form" method="post">
 	<label>Matricula:</label>
-	<input type="text" name="matricula" value="<?= htmlspecialchars($vehiculo_data['MATRICULA']) ?>" required>
+	<input type="text" name="matricula" required placeholder="1111 ZZZ" value="<?= htmlspecialchars($vehiculo_data['MATRICULA']) ?>" required>
 	<?php if(isset($errors['matricula'])): ?>
     		<span style="color:red; display:block; font-size:0.9em;"><?= htmlspecialchars($errors['matricula']) ?></span>
 	<?php endif; ?>

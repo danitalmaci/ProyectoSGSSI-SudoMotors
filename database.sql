@@ -43,7 +43,10 @@ CREATE TABLE `USUARIO` (
 --
 
 INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USERNAME`) VALUES
-('12345678Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300', 'aitorjiji');
+('12345678-Z', 'Aitor', 'Jimenez Jimenez', '668252000', 'aitorji@gmail.com', '2002/10/12', 'RonCola300', 'aitorjiji');
+
+INSERT INTO `USUARIO` (`DNI`, `NOMBRE`, `APELLIDOS`, `TELEFONO`, `EMAIL`, `F_NACIMIENTO`, `CONTRASENA`, `USERNAME`) VALUES
+('22770213-Y', 'June', 'Alvarez Jimenez', '667925412', 'juneji@gmail.com', '2001/02/16', 'VodkaLimon200', 'junecastro');
 
 
 
@@ -67,12 +70,14 @@ CREATE TABLE `VEHICULO` (
 --
 
 INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
-('7777 XDD', 'Kia', 'Sportage', '2018', '205623');
+('7895 TYU', 'Kia', 'Sportage', '2018', '205623');
+INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
+('6255 XDD', 'Ferrari', 'Spider', '2001', '89985');
+INSERT INTO `VEHICULO` (`MATRICULA`, `MARCA`, `MODELO`, `ANO`, `KMS`) VALUES
+('3326 IOP', 'Ford', 'Focus', '2025', '235');
 
 
---
--- Índices para tablas volcadas
---
+
 
 --
 -- Indices de la tabla `usuario`

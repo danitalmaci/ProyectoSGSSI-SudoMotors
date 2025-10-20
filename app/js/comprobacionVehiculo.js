@@ -16,9 +16,9 @@
     // COMPROBACIONES
     function validMatricula(s) {
         if (typeof s !== 'string') return false;
-        s = s.trim();
-        if (s.length === 0) return false;
-        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(s);
+   		s = s.trim();
+    	if (s.length === 0) return false;
+    	return /^[0-9]{4}\s?[A-Z]{3}$/.test(s);
     }
     
     function validMarca(s) {
