@@ -72,7 +72,8 @@ $conn->close();
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Registro - SudoMotors</title> 
+  <title>Registro - SudoMotors</title>
+  <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
   <h1>Registro de usuario</h1>
