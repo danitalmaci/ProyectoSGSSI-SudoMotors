@@ -88,51 +88,50 @@ $conn->close();
       <?php if (isset($errors['usuario'])): ?>
         <span style="color:red;"><?php echo $errors['usuario']; ?></span>
       <?php endif; ?>
-    </label><br>
+    </label>
 
     <label>Contraseña:</label>
     <div style="display:flex; align-items:center; gap:10px;">
       <input type="password" name="contrasena" id="contrasena" required>
       <input type="checkbox" id="togglePass"> Mostrar contraseña
     </div>
-    <br>
 
     <label>Confirmar contraseña:<br>
       <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
       <?php if (isset($errors['confirmar_contrasena'])): ?>
         <span style="color:red;"><?php echo $errors['confirmar_contrasena']; ?></span>
       <?php endif; ?>
-    </label><br>
+    </label>
 
     <label>Nombre:<br>
       <input type="text" name="nombre" required value="<?php echo $v_nombre; ?>">
-    </label><br>
+    </label>
 
     <label>Apellidos:<br>
       <input type="text" name="apellidos" required value="<?php echo $v_apellidos; ?>">
-    </label><br>
+    </label>
 
     <label>DNI:<br>
       <input type="text" name="dni" required placeholder="11111111-Z" value="<?php echo $v_dni; ?>">
       <?php if (isset($errors['dni'])): ?>
         <span style="color:red;"><?php echo $errors['dni']; ?></span>
       <?php endif; ?>
-    </label><br>
+    </label>
 
     <label>Email:<br>
       <input type="email" name="email" required value="<?php echo $v_email; ?>">
       <?php if (isset($errors['email'])): ?>
         <span style="color:red;"><?php echo $errors['email']; ?></span>
       <?php endif; ?>
-    </label><br>
+    </label>
 
     <label>Teléfono:<br>
       <input type="text" name="telefono" required placeholder="9 dígitos" value="<?php echo $v_telefono; ?>">
-    </label><br>
+    </label>
 
     <label>Fecha de nacimiento:<br>
       <input type="date" name="f_nacimiento" required value="<?php echo $v_f_nac; ?>">
-    </label><br><br>
+    </label>
 
     <button type="button" id="register_submit">Registrarme</button>
     <button type="button" onclick="window.location.href='login.php'">Cancelar</button>
