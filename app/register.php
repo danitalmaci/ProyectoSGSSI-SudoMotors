@@ -3,12 +3,9 @@
 // Formulario para registrarse
 // ------------------------------------------------------------
 
-// Datos de conexión a la base de datos
 include 'connection.php'; 
-// Comienzo de sesión
 session_start();
 
-// Variable para mensajes de error o éxito
 $message = '';
 $errors = [];
 
@@ -66,88 +63,88 @@ $v_telefono  = $_POST['telefono'] ?? '';
 $v_f_nac     = $_POST['f_nacimiento'] ?? '';
 
 $conn->close();
+
+// Título de la página
+$pageTitle = "Registro - SudoMotors";
+include("includes/head.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Registro - SudoMotors</title>
-  <link rel="stylesheet" href="css/register.css">
-</head>
-<body>
+<hgroup>
   <h1>Registro de usuario</h1>
+  <h3>Crea tu cuenta para acceder a SudoMotors</h3>
+</hgroup>
 
-  <?php if (!empty($message)): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-  <?php endif; ?>
+<?php if (!empty($message)): ?>
+  <p style="color:red;"><?php echo $message; ?></p>
+<?php endif; ?>
 
-  <form id="register_form" method="POST" action="">
-    <label>Usuario:<br>
-      <input type="text" name="usuario" required value="<?php echo $v_usuario; ?>">
-      <?php if (isset($errors['usuario'])): ?>
-        <span style="color:red;"><?php echo $errors['usuario']; ?></span>
-      <?php endif; ?>
-    </label>
+<form id="register_form" method="POST" action="">
+  <label>Usuario:
+    <input type="text" name="usuario" required value="<?php echo $v_usuario; ?>">
+    <?php if (isset($errors['usuario'])): ?>
+      <span style="color:red;"><?php echo $errors['usuario']; ?></span>
+    <?php endif; ?>
+  </label>
 
-    <label>Contraseña:</label>
-    <div style="display:flex; align-items:center; gap:10px;">
-      <input type="password" name="contrasena" id="contrasena" required>
-      <input type="checkbox" id="togglePass"> Mostrar contraseña
-    </div>
+  <label>Contraseña:</label>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <input type="password" name="contrasena" id="contrasena" required>
+    <label><input type="checkbox" id="togglePass"> Mostrar</label>
+  </div>
 
-    <label>Confirmar contraseña:<br>
-      <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
-      <?php if (isset($errors['confirmar_contrasena'])): ?>
-        <span style="color:red;"><?php echo $errors['confirmar_contrasena']; ?></span>
-      <?php endif; ?>
-    </label>
+  <label>Confirmar contraseña:
+    <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
+    <?php if (isset($errors['confirmar_contrasena'])): ?>
+      <span style="color:red;"><?php echo $errors['confirmar_contrasena']; ?></span>
+    <?php endif; ?>
+  </label>
 
-    <label>Nombre:<br>
-      <input type="text" name="nombre" required value="<?php echo $v_nombre; ?>">
-    </label>
+  <label>Nombre:
+    <input type="text" name="nombre" required value="<?php echo $v_nombre; ?>">
+  </label>
 
-    <label>Apellidos:<br>
-      <input type="text" name="apellidos" required value="<?php echo $v_apellidos; ?>">
-    </label>
+  <label>Apellidos:
+    <input type="text" name="apellidos" required value="<?php echo $v_apellidos; ?>">
+  </label>
 
-    <label>DNI:<br>
-      <input type="text" name="dni" required placeholder="11111111-Z" value="<?php echo $v_dni; ?>">
-      <?php if (isset($errors['dni'])): ?>
-        <span style="color:red;"><?php echo $errors['dni']; ?></span>
-      <?php endif; ?>
-    </label>
+  <label>DNI:
+    <input type="text" name="dni" required placeholder="11111111-Z" value="<?php echo $v_dni; ?>">
+    <?php if (isset($errors['dni'])): ?>
+      <span style="color:red;"><?php echo $errors['dni']; ?></span>
+    <?php endif; ?>
+  </label>
 
-    <label>Email:<br>
-      <input type="email" name="email" required value="<?php echo $v_email; ?>">
-      <?php if (isset($errors['email'])): ?>
-        <span style="color:red;"><?php echo $errors['email']; ?></span>
-      <?php endif; ?>
-    </label>
+  <label>Email:
+    <input type="email" name="email" required value="<?php echo $v_email; ?>">
+    <?php if (isset($errors['email'])): ?>
+      <span style="color:red;"><?php echo $errors['email']; ?></span>
+    <?php endif; ?>
+  </label>
 
-    <label>Teléfono:<br>
-      <input type="text" name="telefono" required placeholder="9 dígitos" value="<?php echo $v_telefono; ?>">
-    </label>
+  <label>Teléfono:
+    <input type="text" name="telefono" required placeholder="9 dígitos" value="<?php echo $v_telefono; ?>">
+  </label>
 
-    <label>Fecha de nacimiento:<br>
-      <input type="date" name="f_nacimiento" required value="<?php echo $v_f_nac; ?>">
-    </label>
+  <label>Fecha de nacimiento:
+    <input type="date" name="f_nacimiento" required value="<?php echo $v_f_nac; ?>">
+  </label>
 
-    <button type="button" id="register_submit">Registrarme</button>
+  <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+    <button type="submit" id="register_submit">Registrarme</button>
     <button type="button" onclick="window.location.href='login.php'">Cancelar</button>
-  </form>
+  </div>
+</form>
 
-  <script src="js/comprobacionDatos.js"></script>
-  
-  <script>
-    const pass1 = document.getElementById('contrasena');
-    const pass2 = document.getElementById('confirmar_contrasena');
-    const toggle1 = document.getElementById('togglePass');
+<script src="js/comprobacionDatos.js"></script>
+<script>
+  const pass1 = document.getElementById('contrasena');
+  const pass2 = document.getElementById('confirmar_contrasena');
+  const toggle1 = document.getElementById('togglePass');
 
-    toggle1.addEventListener('change', () => {
-      pass1.type = toggle1.checked ? 'text' : 'password';
-      pass2.type = toggle1.checked ? 'text' : 'password';
-    });
-  </script>
-</body>
-</html>
+  toggle1.addEventListener('change', () => {
+    pass1.type = toggle1.checked ? 'text' : 'password';
+    pass2.type = toggle1.checked ? 'text' : 'password';
+  });
+</script>
+
+<?php include("includes/footer.php"); ?>

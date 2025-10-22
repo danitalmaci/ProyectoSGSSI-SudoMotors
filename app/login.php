@@ -1,11 +1,6 @@
 <?php
 session_start();
-// ------------------------------------------------------------
-// Formulario para Iniciar Sesión
-// ------------------------------------------------------------
-
-// Datos de conexión a la base de datos
-include 'connection.php'; 
+include 'connection.php'; // Conexión a la BD
 
 $message = "";
 
@@ -18,9 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result && $result->num_rows > 0) {
         $userData = $result->fetch_assoc();
-        session_start(); // Se inicia la sesión
-        $_SESSION['username'] = $userData['USERNAME']; // Guardamos usuario en sesión
-        header("Location: items.php"); // Redirigimos a la lista de vehículos
+        $_SESSION['username'] = $userData['USERNAME'];
+        header("Location: items.php");
         exit;
     } else {
         $message = "Usuario o contraseña incorrecto.";
@@ -36,48 +30,41 @@ if (isset($_GET['logout'])) {
 }
 
 $conn->close();
+
+// Título de la página
+$pageTitle = "Iniciar sesión - SudoMotors";
+include("includes/head.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Iniciar sesión</title>
-</head>
-<body>
-    <h1>Iniciar sesión</h1>
+<hgroup>
+  <h1>Iniciar sesión</h1>
+  <h3>Accede a tu cuenta de SudoMotors</h3>
+</hgroup>
 
-    <?php if (!empty($message)): ?>
-        <p style="color:red;"><?= $message ?></p>
-    <?php endif; ?>
+<?php if (!empty($message)): ?>
+  <p style="color:red;"><?= $message ?></p>
+<?php endif; ?>
 
-    <form id="login_form" method="POST" action="">
-        <label for="user">Usuario:</label>
-        <input type="text" id="user" name="user" required><br><br>
+<form id="login_form" method="POST" action="">
+  <label for="user">Usuario:</label>
+  <input type="text" id="user" name="user" required>
 
-        <label for="password">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" required>
-        <input type="checkbox" id="togglePass"> Mostrar contraseña
-        <br><br>
-	
-	<div>
-        <button type="submit">Iniciar sesión</button>
-        &nbsp;
-        <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
-        <div>
-        <div style="margin-top: 10px;">
-        <button type="button" onclick="window.location.href='index.php'">
-    		Cancelar
-	</button>
-	<div>
-    </form>
-    <script>
-      const pass1 = document.getElementById('contrasena');
-      const toggle1 = document.getElementById('togglePass');
+  <label for="contrasena">Contraseña:</label>
+  <input type="password" id="contrasena" name="contrasena" required>
+  <label><input type="checkbox" id="togglePass"> Mostrar contraseña</label>
 
-      toggle1.addEventListener('change', () => {
-        pass1.type = toggle1.checked ? 'text' : 'password';
-      });
-    </script>
-</body>
-</html>
+  <button type="submit">Iniciar sesión</button>
+  <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
+
+  <button type="button" onclick="window.location.href='index.php'">Cancelar</button>
+</form>
+
+<script>
+  const pass1 = document.getElementById('contrasena');
+  const toggle1 = document.getElementById('togglePass');
+  toggle1.addEventListener('change', () => {
+    pass1.type = toggle1.checked ? 'text' : 'password';
+  });
+</script>
+
+<?php include("includes/footer.php"); ?>

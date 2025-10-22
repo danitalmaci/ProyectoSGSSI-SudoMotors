@@ -4,57 +4,68 @@
 // ------------------------------------------------------------
 
 include 'connection.php'; 
+session_start();
 
-// Comprobar que se ha pasado la matrícula correctamente
-if (isset($_GET['matricula'])) {
-    $matricula = $_GET['matricula'];
-    
-    // Buscar los datos del vehículo
-    $query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='$matricula'");
-
-    if (!$query || mysqli_num_rows($query) <= 0) {
-        echo "Vehículo no encontrado.";
-        exit;
-    }
-
-    $vehiculo_data = mysqli_fetch_assoc($query);
-
-    // Si se ha confirmado la eliminación (POST)
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        mysqli_query($conn, "DELETE FROM VEHICULO WHERE MATRICULA='$matricula'");
-
-        echo "
-        <script>
-            alert('El vehículo se ha borrado con éxito.');
-            window.location.href = 'items.php';
-        </script>
-        ";
-        exit;
-    }
-} else {
+if (!isset($_GET['matricula'])) {
     echo "No se ha especificado una matrícula.";
     exit;
 }
 
-// Cerrar conexión al final del script
+$matricula = $_GET['matricula'];
+
+// Buscar los datos del vehículo
+$query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='$matricula'");
+
+if (!$query || mysqli_num_rows($query) <= 0) {
+    echo "Vehículo no encontrado.";
+    exit;
+}
+
+$vehiculo_data = mysqli_fetch_assoc($query);
+
+// Si se ha confirmado la eliminación (POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    mysqli_query($conn, "DELETE FROM VEHICULO WHERE MATRICULA='$matricula'");
+    echo "
+    <script>
+        alert('El vehículo se ha borrado con éxito.');
+        window.location.href = 'items.php';
+    </script>
+    ";
+    exit;
+}
+
 $conn->close();
+
+// Título y head
+$pageTitle = "Borrar vehículo - SudoMotors";
+include("includes/head.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Borrar vehículo</title>
-</head>
-<body>
-    <h2>¿Seguro que deseas borrar este vehículo?</h2>
-    <p><strong>Matrícula:</strong> <?= htmlspecialchars($vehiculo_data['MATRICULA']) ?></p>
-    <p><strong>Marca:</strong> <?= htmlspecialchars($vehiculo_data['MARCA']) ?></p>
-    <p><strong>Modelo:</strong> <?= htmlspecialchars($vehiculo_data['MODELO']) ?></p>
+<nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
+  <a href="items.php">Mostrar vehículos</a>
+  <?php if (!empty($_SESSION['username'])): ?>
+    <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php endif; ?>
+</nav>
 
-    <form method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este vehículo? Esta acción no se puede deshacer.');">
-        <button type="submit">Sí, borrar vehículo</button>
-        <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
-    </form>
-</body>
-</html>
+<hgroup>
+  <h1>Eliminar vehículo</h1>
+  <h3>¿Seguro que deseas borrar este vehículo?</h3>
+</hgroup>
+
+<table>
+  <tr><th>Matrícula</th><td><?= htmlspecialchars($vehiculo_data['MATRICULA']) ?></td></tr>
+  <tr><th>Marca</th><td><?= htmlspecialchars($vehiculo_data['MARCA']) ?></td></tr>
+  <tr><th>Modelo</th><td><?= htmlspecialchars($vehiculo_data['MODELO']) ?></td></tr>
+</table>
+
+<form method="post" 
+      onsubmit="return confirm('¿Estás seguro de que deseas eliminar este vehículo? Esta acción no se puede deshacer.');"
+      style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.5rem;">
+  
+  <button type="submit" class="contrast">Sí, borrar vehículo</button>
+  <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
+</form>
+
+<?php include("includes/footer.php"); ?>

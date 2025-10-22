@@ -11,10 +11,14 @@ $result = $conn->query($sql);
 // Guardar resultados en una variable para mostrarlos luego en el body
 $vehiculos_html = "";
 
-if ($result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     $vehiculos_html .= '
-        <h1>VEHÍCULOS DISPONIBLES</h1>
-        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
+        <hgroup>
+          <h1>Vehículos disponibles</h1>
+          <h3>Selecciona una matrícula para ver detalles</h3>
+        </hgroup>
+
+        <table>
             <thead>
                 <tr>
                     <th>Marca</th>
@@ -49,34 +53,33 @@ if ($result->num_rows > 0) {
 
 $successMessage = "";
 if (isset($_GET['success']) && $_GET['success'] == 1) {
-    $successMessage = "El vehículo se ha añadido correctamente";
+    $successMessage = "El vehículo se ha añadido correctamente.";
 }
 
 $conn->close();
+
+// Título de la página y head
+$pageTitle = "Vehículos - SudoMotors";
+include("includes/head.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <title>Vehículos</title>
-    <link rel="stylesheet" href="css/items.css">
-</head>
-<body>
-<?php if($successMessage): ?>
-        <p style="color:green; font-weight:bold;"><?= htmlspecialchars($successMessage) ?></p>
+<?php if(!empty($successMessage)): ?>
+  <article role="alert">
+    <strong><?= htmlspecialchars($successMessage) ?></strong>
+  </article>
 <?php endif; ?>
 
-<div style="position: absolute; top: 20px; right: 20px;">
-	<a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil </a><br>
-</div>
+<nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
+  <?php if (!empty($_SESSION['username'])): ?>
+    <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php endif; ?>
+  <a href="index.php">Inicio</a>
+</nav>
 
-<?php echo $vehiculos_html; ?>
+<?= $vehiculos_html ?>
 
-<br>
-<form action="add_item.php" method="GET">
-    <button type="submit">Añadir vehículo</button>
+<form action="add_item.php" method="GET" style="margin-top:1rem;">
+  <button type="submit">Añadir vehículo</button>
 </form>
 
-</body>
-</html>
+<?php include("includes/footer.php"); ?>
