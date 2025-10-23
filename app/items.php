@@ -18,7 +18,7 @@ if ($result && $result->num_rows > 0) {
           <h3>Selecciona una matrícula para ver detalles</h3>
         </hgroup>
 
-        <table>
+        <table >
             <thead>
                 <tr>
                     <th>Marca</th>
@@ -54,6 +54,9 @@ if ($result && $result->num_rows > 0) {
 $successMessage = "";
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $successMessage = "El vehículo se ha añadido correctamente.";
+}
+if (isset($_GET['success']) && $_GET['success'] == 2) {
+    $successMessage = "El vehículo se ha eliminado correctamente.";
 }
 
 $conn->close();

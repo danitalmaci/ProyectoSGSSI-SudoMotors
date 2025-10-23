@@ -30,9 +30,9 @@
     
     function validModelo(modelo) {
         if (typeof modelo !== 'string') return false;
-        modelo = modelo.trim();
-        if (modelo.length === 0) return false;
-        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(modelo);
+		modelo = modelo.trim();
+		if (modelo.length === 0) return false;
+			return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s\-]+$/).test(modelo);
     }
 
 	function validAno(ano) {
@@ -81,7 +81,7 @@
 
         if (name === 'modelo') {
             if (!validModelo(val)) {
-                span.textContent = 'El modelo solo puede contener letras, espacios o guiones.';
+                span.textContent = 'El modelo solo puede contener letras, números, espacios o guiones.';
                 return false;
             }
             return true;

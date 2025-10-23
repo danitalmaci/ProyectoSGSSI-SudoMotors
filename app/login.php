@@ -56,7 +56,7 @@ include("includes/head.php");
   <button type="submit">Iniciar sesión</button>
   <span>¿No estás registrado? <a href="register.php">Regístrate</a></span>
 
-  <button type="button" onclick="window.location.href='index.php'">Cancelar</button>
+  <button type="button" style="font-size: 16px; padding: 8px 10px;" onclick="window.location.href='index.php'">Cancelar</button>
 </form>
 
 <script>

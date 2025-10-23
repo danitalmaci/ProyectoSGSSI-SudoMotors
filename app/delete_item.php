@@ -26,12 +26,7 @@ $vehiculo_data = mysqli_fetch_assoc($query);
 // Si se ha confirmado la eliminación (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_query($conn, "DELETE FROM VEHICULO WHERE MATRICULA='$matricula'");
-    echo "
-    <script>
-        alert('El vehículo se ha borrado con éxito.');
-        window.location.href = 'items.php';
-    </script>
-    ";
+    header("Location: items.php?success=2");
     exit;
 }
 
@@ -61,7 +56,6 @@ include("includes/head.php");
 </table>
 
 <form method="post" 
-      onsubmit="return confirm('¿Estás seguro de que deseas eliminar este vehículo? Esta acción no se puede deshacer.');"
       style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.5rem;">
   
   <button type="submit" class="contrast">Sí, borrar vehículo</button>
