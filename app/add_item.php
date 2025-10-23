@@ -10,13 +10,14 @@ $message = '';
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	// Guardar todos los campos del formulario en variables
     $matricula   = $_POST['matricula'] ?? '';
     $marca       = $_POST['marca'] ?? '';
     $modelo      = $_POST['modelo'] ?? '';
     $anio        = $_POST['ano'] ?? '';
     $kilometros  = $_POST['kms'] ?? '';
 
-    // Comprobar si ya existe matrícula
+    // Comprobar si ya existe la matrícula del vehiculo a añadir
     $check_vehiculo = mysqli_query($conn, "SELECT MATRICULA FROM VEHICULO WHERE MATRICULA = '$matricula'");
     if ($check_vehiculo && mysqli_num_rows($check_vehiculo) > 0) {
         $errors['matricula'] = "Ya existe un vehículo con esta matrícula.";
@@ -29,9 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = mysqli_query($conn, $insertSql);
 
         if ($result) {
+        	// Si no hay errores se vuelve al listado de vehiculos
             header("Location: items.php?success=1");
             exit;
         } else {
+        	// Si existe algún error se muestra el mensaje del error por pantalla
             $message = "Error al insertar vehículo: " . mysqli_error($conn);
         }
     }

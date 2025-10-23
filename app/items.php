@@ -12,6 +12,7 @@ $result = $conn->query($sql);
 $vehiculos_html = "";
 
 if ($result && $result->num_rows > 0) {
+	// Se guarda el codigo HTML para la presntación de la tabla
     $vehiculos_html .= '
         <hgroup>
           <h1>Vehículos disponibles</h1>
@@ -28,7 +29,8 @@ if ($result && $result->num_rows > 0) {
             </thead>
             <tbody>
     ';
-
+	
+	// Se recorre la variable resultado donde se accede al listado de vehiculos, para ir mostrando la información de cada uno de ellos
     while ($row = $result->fetch_assoc()) {
         $vehiculos_html .= '
             <tr>
@@ -48,13 +50,16 @@ if ($result && $result->num_rows > 0) {
         </table>
     ';
 } else {
+	// Si la variable resultado no estuviese vacia, se mostraria un mensaje indicando que no existen vehiculos guardados
     $vehiculos_html .= "<h3>No hay vehículos para mostrar actualmente.</h3>";
 }
 
+// Mensaje para indicar que el vehiculo ha sido añadido correctamente
 $successMessage = "";
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $successMessage = "El vehículo se ha añadido correctamente.";
 }
+// Mensaje para indicar que el vehiculo ha sido eliminado correctamente
 if (isset($_GET['success']) && $_GET['success'] == 2) {
     $successMessage = "El vehículo se ha eliminado correctamente.";
 }

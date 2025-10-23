@@ -1,5 +1,5 @@
 <?php
-session_start(); // ✅ Start the session
+session_start();
 $pageTitle = "Inicio - SudoMotors";
 include("includes/head.php");
 ?>
@@ -18,7 +18,7 @@ include("includes/head.php");
       <a href="register.php" role="button" class="contrast">Registro de usuario</a>
       <a href="login.php" role="button" class="contrast">Iniciar sesión</a>
   <?php endif; ?>
-  <a href="items.php" role="button">Ver elementos</a>
+  <a href="items.php" role="button">Listado de vehículos</a>
 </nav>
 
 
