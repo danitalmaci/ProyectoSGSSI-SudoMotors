@@ -39,8 +39,10 @@ include("includes/head.php");
 
 <nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
   <a href="items.php">Mostrar vehículos</a>
-  <?php if (!empty($_SESSION['username'])): ?>
-    <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php if (isset($_SESSION['username'])): ?>
+      <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php else: ?>
+      <a href="login.php">Iniciar sesión</a>
   <?php endif; ?>
 </nav>
 
@@ -59,7 +61,10 @@ include("includes/head.php");
       style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.5rem;">
   
   <button type="submit" class="contrast">Sí, borrar vehículo</button>
-  <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
+  <button type="button" onclick="window.location.href='show_item.php?matricula=<?= urlencode($matricula) ?>'">
+      Cancelar
+  </button>
+
 </form>
 
 <?php include("includes/footer.php"); ?>

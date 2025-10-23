@@ -73,10 +73,12 @@ include("includes/head.php");
 <?php endif; ?>
 
 <nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
-  <?php if (!empty($_SESSION['username'])): ?>
-    <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php if (isset($_SESSION['username'])): ?>
+      <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
+  <?php else: ?>
+      <a href="login.php">Iniciar sesión</a>
   <?php endif; ?>
-  <a href="index.php">Inicio</a>
+      <a href="index.php">Inicio</a>
 </nav>
 
 <?= $vehiculos_html ?>

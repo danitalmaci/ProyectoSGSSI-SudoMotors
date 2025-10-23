@@ -68,6 +68,11 @@ include("includes/head.php");
   <button type="button" onclick="window.location.href='login.php?logout=1'">
     Cerrar sesión
   </button>
+  
+  <button type="button" onclick="window.location.href='items.php'">
+      Cancelar
+  </button>
+    
 </div>
 
 <?php include("includes/footer.php"); ?>
