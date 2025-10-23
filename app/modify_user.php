@@ -61,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Cerrar conexión
 $conn->close();
+
+// Título de la página
+$pageTitle = "Registro - SudoMotors";
+include("includes/head.php");
 ?>
 
 <!DOCTYPE html>
@@ -109,4 +113,6 @@ $conn->close();
 </body>
 
 </html>
+
+<?php include("includes/footer.php"); ?>
 
