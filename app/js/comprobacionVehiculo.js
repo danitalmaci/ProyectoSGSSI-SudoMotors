@@ -25,7 +25,7 @@
         if (typeof marca !== 'string') return false;
         marca = marca.trim();
         if (marca.length === 0) return false;
-        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s\-]+$/).test(marca);
+        return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s\-]+$/).test(marca);
     }
     
     function validModelo(modelo) {
@@ -73,7 +73,7 @@
         
         if (name === 'marca') {
             if (!validMarca(val)) {
-                span.textContent = 'La marca solo puede contener letras, espacios o guiones.';
+                span.textContent = 'La marca solo puede contener letras, números, espacios o guiones.';
                 return false;
             }
             return true;

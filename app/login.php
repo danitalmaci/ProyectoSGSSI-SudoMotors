@@ -7,6 +7,7 @@ $message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $_POST["user"];
     $password = $_POST["contrasena"];
+    $v_user = $user;
 
     $sql = "SELECT * FROM USUARIO WHERE USERNAME = '$user' AND CONTRASENA = '$password'";
     $result = $conn->query($sql);
@@ -29,6 +30,8 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+$v_user = $v_user ?? '';
+
 $conn->close();
 
 // Título de la página
@@ -47,7 +50,7 @@ include("includes/head.php");
 
 <form id="login_form" method="POST" action="">
   <label for="user">Usuario:</label>
-  <input type="text" id="user" name="user" required>
+  <input type="text" id="user" name="user" required value="<?= htmlspecialchars($v_user) ?>">
 
   <label for="contrasena">Contraseña:</label>
   <input type="password" id="contrasena" name="contrasena" required>

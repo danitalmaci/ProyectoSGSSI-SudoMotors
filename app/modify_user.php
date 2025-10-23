@@ -16,7 +16,7 @@ if (!isset($_SESSION['username'])) {
 // Buscar los datos del usuario
 $query = mysqli_query($conn, "SELECT * FROM USUARIO WHERE USERNAME='" . $_SESSION['username'] . "'");
 
-if (!$query || mysqli_num_rows($query) < 0) {
+if (!$query || mysqli_num_rows($query) === 0) {
     	echo "Usuario no encontrado.";
     	exit;
 }
@@ -32,7 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     	$new_email = $_POST['email'];
     	$new_f_nacimiento = $_POST['f_nacimiento'];
     	$new_contrasena = $_POST['contrasena'];
+    	$confirm_contrasena = $_POST['confirmar_contrasena'];
     	$new_username = $_POST['username'];
+    	
+    	// Comprobar contraseñas
+  	if ($new_contrasena !== $confirm_contrasena) {
+    		$errors['confirmar_contrasena'] = "Las contraseñas no coinciden.";
+	}
+
 
 	$check_dni = mysqli_query($conn, "SELECT * FROM USUARIO WHERE DNI='$new_dni' AND USERNAME != '" . $_SESSION['username'] . "'");
 	
@@ -82,8 +89,15 @@ include("includes/head.php");
     	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
     	
     	<label>Contraseña:</label>
-    	<input type="password" name="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>
-    	
+	<div style="display:flex; align-items:center; gap:10px;">
+    		<input type="password" name="contrasena" id="contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required>
+    		<label><input type="checkbox" id="togglePass"> Mostrar</label>
+	</div><br>
+
+	<label>Confirmar contraseña:</label>
+	<input type="password" name="confirmar_contrasena" id="confirmar_contrasena" value="<?= htmlspecialchars($user_data['CONTRASENA']) ?>" required><br>
+
+
     	<label>Nombre:</label>
     	<input type="text" name="nombre" value="<?= htmlspecialchars($user_data['NOMBRE']) ?>" required><br>
 
@@ -109,6 +123,18 @@ include("includes/head.php");
 </form>
 
 <script src="js/comprobacionDatos.js"></script>
+
+<script>
+  	const pass1 = document.getElementById('contrasena');
+  	const pass2 = document.getElementById('confirmar_contrasena');
+  	const toggle = document.getElementById('togglePass');
+
+  	toggle.addEventListener('change', () => {
+    		const type = toggle.checked ? 'text' : 'password';
+    		pass1.type = type;
+    		pass2.type = type;
+  	});
+</script>
 
 </body>
 
