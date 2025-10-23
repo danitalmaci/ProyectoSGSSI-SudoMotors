@@ -28,6 +28,7 @@
       color: var(--pico-muted-color);
     }
   </style>
+    <link rel="icon" href="/media/favicon.png" type="image/png">
 </head>
 <body>
   <main>
