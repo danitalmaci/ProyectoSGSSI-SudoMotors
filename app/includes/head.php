@@ -7,7 +7,7 @@
   <title><?php echo $pageTitle ?? 'SudoMotors'; ?></title>
 
   <!-- PicoCSS principal -->
-  <link rel="stylesheet" href="css/pico.fluid.classless.indigo.min.css">
+  <link rel="stylesheet" href="css/estilo_principal.css">
 
   <!-- Estilo para centrar todo -->
   <style>
