@@ -130,7 +130,7 @@ include("includes/head.php");
   </label>
 
   <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
-    <button type="submit" id="register_submit">Registrarme</button>
+    <button type="button" id="register_submit">Registrarme</button>
     <button type="button" onclick="window.location.href='login.php'">Cancelar</button>
   </div>
 </form>
