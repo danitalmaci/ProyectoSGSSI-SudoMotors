@@ -19,11 +19,11 @@ $errors = [];
 
 // Buscar los datos del vehículo a partir del parámetro del formulario
 $query = mysqli_query($conn, "SELECT * FROM VEHICULO WHERE MATRICULA='$matricula'");
+// Si no hay resultados, se guarda null
 if (!$query || mysqli_num_rows($query) == 0) {
-    // Si no hay resultados, se asigna null
     $vehiculo_data = null;
 } 
-
+// Si hay resultados, se guardan los datos actuales del vehículo
 else {
     $vehiculo_data = mysqli_fetch_assoc($query);
 }
@@ -51,12 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si no hay errores se sigue con la modificacion de datos
     if (empty($errors)) {
         $sql = "UPDATE VEHICULO SET 
-                    MATRICULA='$new_matricula',
-                    MARCA='$new_marca',
-                    MODELO='$new_modelo',
-                    ANO='$new_ano',
-                    KMS='$new_kms'
+                MATRICULA='$new_matricula',
+                MARCA='$new_marca',
+                MODELO='$new_modelo',
+                ANO='$new_ano',
+                KMS='$new_kms'
                 WHERE MATRICULA='$matricula'";
+        
         // Se ejecuta la operación y se almacena el resultado de la misma
         $result = mysqli_query($conn, $sql);
 
@@ -88,12 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Se cierra la conexión con la base de datos
 $conn->close();
 
-// HTML
-// Título
+// Título de la página
 $pageTitle = "Modificar vehículo - SudoMotors";
 include("includes/head.php");
 ?>
 
+// HTML
 // Botones para navegar por la web
 <nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
     <a href="items.php">Mostrar vehículos</a>
