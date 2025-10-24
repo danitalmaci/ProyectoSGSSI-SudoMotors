@@ -1,3 +1,4 @@
+// js para la comprobación de parámetros de usuario
 (function(){
     // Indica cualquier error por formato no válido
     function getErrorSpan(input) {
@@ -14,28 +15,28 @@
     }
 
     // COMPROBACIONES
-    function validMatricula(matricula) {
+    function validMatricula(matricula) { // Comprueba que se ha introducido una matrícula de 4 letras, con o sin espacio y 3 números (1234( )ABC)
         if (typeof matricula !== 'string') return false;
    		matricula = matricula.trim().toUpperCase();
     	if (matricula.length === 0) return false;
     	return /^[0-9]{4}\s?[A-Z]{3}$/.test(matricula);
     }
     
-    function validMarca(marca) {
+    function validMarca(marca) { // Comprueba que se ha introducido un string de longitud mayor a 0, con o sin números
         if (typeof marca !== 'string') return false;
         marca = marca.trim();
         if (marca.length === 0) return false;
         return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s\-]+$/).test(marca);
     }
     
-    function validModelo(modelo) {
+    function validModelo(modelo) { // Comprueba que se ha introducido un string de longitud mayor a 0, con o sin números
         if (typeof modelo !== 'string') return false;
 		modelo = modelo.trim();
 		if (modelo.length === 0) return false;
-			return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s\-]+$/).test(modelo);
+		return (/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s\-]+$/).test(modelo);
     }
 
-	function validAno(ano) {
+	function validAno(ano) { // Comprueba que se ha introducido un año mayor que 1800
         if (ano === null || ano === undefined) return false;
         ano = String(ano).trim();
         if (ano.length === 0) return false;
@@ -43,7 +44,7 @@
         return Number(ano) >= 1800;
     }
 
-    function validKms(kms) {
+    function validKms(kms) { // Comprueba que se ha introducido un número
         if (kms === null || kms === undefined) return false;
         kms = String(kms).trim();
         if (kms.length === 0) return false;
@@ -106,22 +107,27 @@
         return true; // Para cualquier otro campo no definido
     }
 
+	// Enviar el formulario
     function enviarFormulario(formId) {
         const form = document.getElementById(formId);
         const inputs = form.querySelectorAll('input[name="matricula"], input[name="marca"], input[name="modelo"], input[name="ano"], input[name="kms"]');
     
         let todoOk = true;
 
+		// Se ejecuta validateField para cada parámetro del formulario
         inputs.forEach(input => {
             if (!validateField(input)) {
                 todoOk = false;
             }
         });
 
+		// Si no hay errores, enviar el formulario al servidor
         if (todoOk) {
             form.submit(); // Enviar el formulario al servidor
-        } else {
-            // Opcional: poner foco en el primer input con error
+        } 
+		// Si hay errores, no se envia el formulario al servidor
+		else {
+            // Poner foco en el primer input con error
             const firstErr = form.querySelector('.field-error:not(:empty)');
             if (firstErr) {
                 const before = firstErr.previousElementSibling;
@@ -130,6 +136,7 @@
         }
     }
 
+	// Se añaden los listeners necesarios para que se ejecute correctamente el js
     document.addEventListener('DOMContentLoaded', function() {
         const botonModify = document.getElementById('item_modify_submit');
         if (botonModify) {
