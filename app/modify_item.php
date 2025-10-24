@@ -94,35 +94,31 @@ $pageTitle = "Modificar vehículo - SudoMotors";
 include("includes/head.php");
 ?>
 
-// HTML
-// Botones para navegar por la web
+
 <nav style="display:flex; justify-content:flex-end; gap:1rem; margin-bottom:1rem;">
     <a href="items.php">Mostrar vehículos</a>
-    // Si no está la sesión iniciada, no se puede ver el perfil
+
     <?php if (!empty($_SESSION['username'])): ?>
         <a href="show_user.php?user=<?= urlencode($_SESSION['username']) ?>">Ver perfil</a>
     <?php endif; ?>
 </nav>
 
-// Subtítulo y explicación
+
 <hgroup>
     <h1>Modificar datos del vehículo</h1>
     <h3>Actualiza la información y guarda los cambios</h3>
 </hgroup>
 
-// En caso de algún error, lo notifica
 <?php if (!empty($errors['general'])): ?>
     <article role="alert"><strong><?= htmlspecialchars($errors['general']) ?></strong></article>
 <?php endif; ?>
 
-// En caso de no encontrar el vehículo a modificar, lo notifica
 <?php if ($notFound): ?>
     <article role="alert"><strong>Vehículo no encontrado.</strong></article>
     <button type="button" onclick="window.location.href='items.php'">Volver</button>
     <?php include("includes/footer.php"); exit; ?>
 <?php endif; ?>
 
-// Formulario para la modificación de parámetros
 <form id="item_modify_form" method="post" action="">
     <label>Matrícula
         <input
@@ -161,7 +157,6 @@ include("includes/head.php");
     </div>
 </form>
 
-// Ejecutar el js para la validación de datos
 <script src="js/comprobacionVehiculo.js"></script>
 
 <?php include("includes/footer.php"); ?>
