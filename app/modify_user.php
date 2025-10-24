@@ -43,15 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     		$errors['confirmar_contrasena'] = "Las contraseñas no coinciden.";
 	}
 
-	// Se comprueba si el DNI nuevo está ya en uso
-	$check_dni = mysqli_query($conn, "SELECT * FROM USUARIO WHERE DNI='$new_dni' AND USERNAME != '" . $_SESSION['username'] . "'");
+	// Comprobar datos repetidos
+  	$checkSql = "SELECT USERNAME, DNI 
+             FROM USUARIO 
+             WHERE USERNAME = '$new_username' OR DNI = '$new_dni'";
 
-	// Si el DNI esta en uso se notifica del error
-	if (mysqli_num_rows($check_dni) > 0) {
-    		echo "<p style='color:red;'>Error: Ya existe un usuario con ese DNI.</p>";
-	} 
-	// Si no existe, entonces se actualizan los datos
-	else {
+  	$res = mysqli_query($conn, $checkSql);
+  	$exists = mysqli_fetch_assoc($res);
+
+  	if ($exists) {
+  		if ($exists['USERNAME'] === $new_username) $errors['usuario'] = "El usuario ya existe.";
+  		if ($exists['DNI'] === $new_dni) $errors['dni'] = "El DNI ya está registrado.";
+ 	} 
+ 	
+ 	if(empty($errors)){// Si no hay errores, entonces se actualizan los datos
    		$sql = "UPDATE USUARIO SET 
         		NOMBRE='$new_nombre',
             	APELLIDOS='$new_apellidos',
@@ -100,6 +105,9 @@ include("includes/head.php");
 	<form id="user_modify_form" method="post">
 		<label>Username:</label>
     	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
+    	<?php if (isset($errors['dni'])): ?>
+      	<span style="color:red;"><?php echo $errors['usuario']; ?></span>
+    	<?php endif; ?>
     	
     	<label>Contraseña:</label>
 		<div style="display:flex; align-items:center; gap:10px;">
@@ -118,6 +126,9 @@ include("includes/head.php");
     	
     	<label>DNI:</label>
     	<input type="text" name="dni" value="<?= htmlspecialchars($user_data['DNI']) ?>" required><br>
+    	<?php if (isset($errors['dni'])): ?>
+     	<span style="color:red;"><?php echo $errors['dni']; ?></span>
+  		<?php endif; ?>
     	
     	<label>Email:</label>
     	<input type="email" name="email" value="<?= htmlspecialchars($user_data['EMAIL']) ?>" required><br>
