@@ -81,7 +81,7 @@ $pageTitle = "Registro - SudoMotors";
 include("includes/head.php");
 ?>
 
-// HTML
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,10 +93,10 @@ include("includes/head.php");
     	<a href="items.php">Inicio </a><br>
 	</div>
 
-	// Sutbítulo
+	
 	<h1>Modificar tus datos</h1>
 
-	// Formulario para la modificación de parámetros
+	
 	<form id="user_modify_form" method="post">
 		<label>Username:</label>
     	<input type="text" name="username" value="<?= htmlspecialchars($user_data['USERNAME']) ?>" required><br>
@@ -134,10 +134,10 @@ include("includes/head.php");
 		</button>
 	</form>
 
-	// Ejecutar el js para la validación de datos
+	
 	<script src="js/comprobacionDatos.js"></script>
 
-	// Botón para ver contraseñas
+	
 	<script>
   		const pass1 = document.getElementById('contrasena');
   		const pass2 = document.getElementById('confirmar_contrasena');
