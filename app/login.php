@@ -1,4 +1,5 @@
 <?php
+// Comienza la sesión
 session_start();
 include 'connection.php'; // Conexión a la BD
 

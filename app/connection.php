@@ -5,7 +5,7 @@
 
 $hostname = "db";
 $bdusername = "admin";
-$password = "test";
+$password = "Sudo@Motors02";
 $db = "database";
 
 // Crear la conexión con la base de datos
